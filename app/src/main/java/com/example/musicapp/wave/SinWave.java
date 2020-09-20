@@ -5,13 +5,13 @@ public class SinWave {
     private float frequency;
     private float amplitude;
     private double initialPhase;
-    private float phase;
+    //private float phase;
 
     public SinWave(float frequency, float amplitude, double initialPhase) {
         this.frequency = frequency;
         this.amplitude = amplitude;
         this.initialPhase = initialPhase;
-        phase = 0;
+        //phase = 0;
     }
 
     public float getFrequency() {
@@ -22,9 +22,9 @@ public class SinWave {
         return amplitude;
     }
 
-    public float getPhase() {
+    /*public float getPhase() {
         return phase;
-    }
+    }*/
 
     public void setFrequency(float frequency) {
         this.frequency = frequency;
@@ -34,16 +34,12 @@ public class SinWave {
         this.amplitude = amplitude;
     }
 
-    public void setPhase(float phase) {
+   /* public void setPhase(float phase) {
         this.phase = phase;
-    }
+    }*/
 
 
-    protected void countPhase(float d) {
-        float T = 1 / frequency;
-        phase = phase + d / T;
-        phase -= (int) phase;
-    }
+
 
 
 

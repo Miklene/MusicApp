@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">MusicApp</string>
+    <string name="invalid_frequency">Неверное значение частоты</string>
+    <string name="frequence">Частота</string>
+    <string name="duration">500000</string>
+    <string name="addWave">Добавить волну</string>
+    <string name="play">Воспроизвести</string>
+    <string name="waveParameters">Волновые хар-ки</string>
+    <string name="harmonicParameters">Хар-ки гармоники</string>
+    <string name="apply">Применить</string>
+    <string name="cancel">Отменить</string>
+    <string name="stereo">Стерео</string>
+    <string name="mono">Моно</string>
+    <string name="type">Тип:</string>
+    <string name="phaseCorrection">Коррекция фазы</string>
+    <string name="sin">Синус</string>
+    <string name="saw">Пила</string>
+    <string name="violin">Скрипка</string>
+    <string name="numberOfHarmonic">Число гармоник</string>
+    <string name="stop">Стоп</string>
+    <string name="change">Изменить</string>
+    <string name="delete">Удалить</string>
+    <string name="addHarmonic">Добавить гармонику</string>
+    <string name="showGraph">Показать график</string>
+    <string name="playmp3">Воспроизвести mp3</string>
+    <string name="plus">+</string>
+    <string name="plus1">+1</string>
+    <string name="plus50">+50</string>
+    <string name="minus1">-1</string>
+    <string name="minus50">-50</string>
+    <string name="deleteOneHarmonics">-1 гарм-ка</string>
+    <string name="addOneHarmonics">+1 гарм-ка</string>
+    <string name="horizontalZoomScroll">Разрешить масштабирование</string>
+    <string name="palka">|</string>
+    <string name="amplitude">Амп-да</string>
+    <string name="add">Доб-ть</string>
+    <string name="fastAdd">Скрипка</string>
+    <string name="firstRatio">1-ый коэф.</string>
+    <string name="secondRatio">2-ой коэф.</string>
+
+    <string name="isFloat">Float буфер</string>
+
+
+</resources>

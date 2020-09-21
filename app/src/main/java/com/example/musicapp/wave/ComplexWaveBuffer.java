@@ -9,11 +9,16 @@ public class ComplexWaveBuffer {
     SinWaveBuffer mainToneBuffer;
     SinWaveBuffer harmonicBuffer;
     ArrayList<SinWaveBuffer> harmonicBuffers;
+    ArrayList<CallableSinWaveBuffer> callableSinWaveBuffers = new ArrayList<>();
+    int duration;
 
-    public ComplexWaveBuffer(ComplexWave complexWave) {
+    public ComplexWaveBuffer(ComplexWave complexWave, int duration) {
+        this.duration = duration;
         this.complexWave = complexWave;
         harmonicBuffers = new ArrayList<>();
-        //readyBuffers = new ReadyBuffers();
+        int harmonicsNumber = complexWave.getWaveHarmonics().size();
+        for (int i = 0; i < harmonicsNumber; i++)
+            callableSinWaveBuffers.add(new CallableSinWaveBuffer(complexWave.getWaveHarmonics().get(i), duration, readyBuffers));
     }
 
     public float[] createBufferSingleThread(int duration) {
@@ -31,24 +36,19 @@ public class ComplexWaveBuffer {
         }
         buffer = readyBuffers.getBuffer();
         return buffer;
-
     }
 
 
     public float[] createBuffer(int duration) {
-
         float[] buffer;
         int harmonicsNumber = complexWave.getWaveHarmonics().size();
         readyBuffers = new ReadyBuffers(harmonicsNumber);
         ArrayList<Future<float[]>> readyBuffer = new ArrayList<>();
-
-        ExecutorService executorService = Executors.newFixedThreadPool(harmonicsNumber/4);
+        ExecutorService executorService = Executors.newFixedThreadPool(harmonicsNumber / 4);
         /*readyBuffer.add(executorService.submit(
                 new CallableSinWaveBuffer(complexWave.getMainTone(), duration,readyBuffers)));*/
-
         for (int i = 0; i < harmonicsNumber; i++) {
-            readyBuffer.add(executorService.submit(
-                    new CallableSinWaveBuffer(complexWave.getWaveHarmonics().get(i),duration,readyBuffers)));
+            readyBuffer.add(executorService.submit(callableSinWaveBuffers.get(i)));
         }
         for (Future<float[]> fs : readyBuffer) {
             try {
@@ -59,12 +59,9 @@ public class ComplexWaveBuffer {
                 executorService.shutdown();
             }
         }
-        long start = System.nanoTime();
-        while (readyBuffers.getNumberOfOperations() != 0){
+        while (readyBuffers.getNumberOfOperations() != 0) {
             tryAddBuffer();
         }
-        long finish = System.nanoTime();
-        System.out.println(finish - start);
         buffer = readyBuffers.getBuffer();
         executorService.shutdown();
         return correctAmplitude(buffer);
@@ -87,7 +84,6 @@ public class ComplexWaveBuffer {
         }
         return max;
     }
-
 
     private float[] addBuffer(float[] buf1, float[] buf2) {
         int duration = buf1.length;

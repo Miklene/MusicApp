@@ -2,6 +2,8 @@ package com.example.musicapp;
 
 import android.os.Parcel;
 
+import com.example.musicapp.common.Type;
+
 import java.util.ArrayList;
 
 

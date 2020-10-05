@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.musicapp.main.RecyclerViewAdapterHarmonics;
+
 import java.util.ArrayList;
 
 

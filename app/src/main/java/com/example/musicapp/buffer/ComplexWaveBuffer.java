@@ -1,54 +1,58 @@
-package com.example.musicapp.wave;
+package com.example.musicapp.buffer;
+
+import com.example.musicapp.wave.Wave;
 
 import java.util.ArrayList;
 import java.util.concurrent.*;
 
 public class ComplexWaveBuffer {
-    ComplexWave complexWave;
+    Wave wave;
     ReadyBuffers readyBuffers;
     SinWaveBuffer mainToneBuffer;
     SinWaveBuffer harmonicBuffer;
-    ArrayList<SinWaveBuffer> harmonicBuffers;
-    ArrayList<CallableSinWaveBuffer> callableSinWaveBuffers = new ArrayList<>();
+
+    ArrayList<SinWaveBuffer> sinWaveBuffers = new ArrayList<>();
     int duration;
 
-    public ComplexWaveBuffer(ComplexWave complexWave, int duration) {
+    public ComplexWaveBuffer(Wave wave, int duration) {
         this.duration = duration;
-        this.complexWave = complexWave;
-        harmonicBuffers = new ArrayList<>();
-        int harmonicsNumber = complexWave.getWaveHarmonics().size();
-        for (int i = 0; i < harmonicsNumber; i++)
-            callableSinWaveBuffers.add(new CallableSinWaveBuffer(complexWave.getWaveHarmonics().get(i), duration, readyBuffers));
+        this.wave = wave;
+        int harmonicsNumber = wave.getWaveHarmonics().size();
+        sinWaveBuffers.add((new SinWaveBuffer(wave.getMainTone(), duration)));
+        for (int i = 0; i < harmonicsNumber; i++) {
+            sinWaveBuffers.add(new SinWaveBuffer(wave.getWaveHarmonics().get(i), duration));
+        }
     }
 
-    public float[] createBufferSingleThread(int duration) {
+    public float[] createBufferSingleThread() {
         float[] buffer;
-        int harmonicsNumber = complexWave.getWaveHarmonics().size();
+        int harmonicsNumber = wave.getWaveHarmonics().size();
         readyBuffers = new ReadyBuffers(harmonicsNumber);
-        mainToneBuffer = new SinWaveBuffer(complexWave.getMainTone(), duration, readyBuffers);
-        mainToneBuffer.makeSinBuffer();
-        for (int i = 0; i < harmonicsNumber; i++) {
-            harmonicBuffer = new SinWaveBuffer(complexWave.getWaveHarmonics().get(i), duration, readyBuffers);
-            harmonicBuffer.makeSinBuffer();
+        //mainToneBuffer = new SinWaveBuffer(wave.getMainTone(), duration, readyBuffers);
+        for (int i = 0; i < sinWaveBuffers.size(); i++) {
+            //harmonicBuffer = new SinWaveBuffer(wave.getWaveHarmonics().get(i), duration, readyBuffers);
+            readyBuffers.putBuffer(sinWaveBuffers.get(i).makeSinBuffer());
         }
         for (int i = 0; i < harmonicsNumber; i++) {
             readyBuffers.putBuffer(addBuffer(readyBuffers.getBuffer(), readyBuffers.getBuffer()));
         }
         buffer = readyBuffers.getBuffer();
-        return buffer;
+        return correctAmplitude(buffer);
     }
 
 
-    public float[] createBuffer(int duration) {
+    public float[] createBuffer() {
         float[] buffer;
-        int harmonicsNumber = complexWave.getWaveHarmonics().size();
+        int harmonicsNumber = wave.getWaveHarmonics().size();
         readyBuffers = new ReadyBuffers(harmonicsNumber);
         ArrayList<Future<float[]>> readyBuffer = new ArrayList<>();
-        ExecutorService executorService = Executors.newFixedThreadPool(harmonicsNumber / 4);
-        /*readyBuffer.add(executorService.submit(
-                new CallableSinWaveBuffer(complexWave.getMainTone(), duration,readyBuffers)));*/
-        for (int i = 0; i < harmonicsNumber; i++) {
-            readyBuffer.add(executorService.submit(callableSinWaveBuffers.get(i)));
+        ExecutorService executorService;
+        if (harmonicsNumber == 0)
+            executorService = Executors.newFixedThreadPool(1);
+        else
+            executorService = Executors.newFixedThreadPool(harmonicsNumber / 8);
+        for (int i = 0; i < sinWaveBuffers.size(); i++) {
+            readyBuffer.add(executorService.submit(sinWaveBuffers.get(i)));
         }
         for (Future<float[]> fs : readyBuffer) {
             try {

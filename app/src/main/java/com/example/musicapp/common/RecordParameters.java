@@ -1,4 +1,4 @@
-package com.example.musicapp.wave;
+package com.example.musicapp.common;
 
 public interface RecordParameters {
     int sampleRate = 44100;

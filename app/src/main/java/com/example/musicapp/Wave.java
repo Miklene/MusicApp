@@ -2,6 +2,8 @@ package com.example.musicapp;
 
 import android.os.Parcelable;
 
+import com.example.musicapp.common.Type;
+
 import java.util.ArrayList;
 
 public abstract class Wave implements Parcelable, HarmonicBehavior {

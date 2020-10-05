@@ -2,6 +2,8 @@ package com.example.musicapp;
 
 import android.os.Parcel;
 
+import com.example.musicapp.common.Type;
+
 public class SawWave extends Wave {
     private int myAmplitude;
 

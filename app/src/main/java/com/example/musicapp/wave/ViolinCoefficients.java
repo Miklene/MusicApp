@@ -2,7 +2,7 @@ package com.example.musicapp.wave;
 
 public interface ViolinCoefficients {
     //32 начальных фаз в градусах из таблицы
-     double[] initialPhase = {
+     double[] initialPhaseCoefficients = {
             -10.47,  -22.87, 174.82, -113.37,   31.67, -97.76, -147.28, 167.50,
              60.95, -133.69, -81.50, -153.50,   25.63, -60.95,  -37.05,  24.03,
              64.57,   52.95, 109.83, -150.09, -167.28,  81.16, -134.89, -52.63,

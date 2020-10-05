@@ -1,5 +1,7 @@
 package com.example.musicapp;
 
+import com.example.musicapp.common.Type;
+
 public class WaveCreator {
  //   private Wave wave;
 

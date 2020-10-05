@@ -1,4 +1,4 @@
-package com.example.musicapp;
+package com.example.musicapp.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,11 +15,28 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.musicapp.Frequency;
+import com.example.musicapp.R;
+import com.example.musicapp.Reverberation;
+import com.example.musicapp.SinWaveHarmonic;
+import com.example.musicapp.common.StringFormer;
+import com.example.musicapp.ToneGenerator;
+import com.example.musicapp.model.Waves;
+import com.example.musicapp.model.WavesObserver;
+import com.example.musicapp.buffer.ComplexWaveBuffer;
+import com.example.musicapp.wave_dialog.WaveDialogActivity;
+import com.example.musicapp.WaveHarmonic;
+import com.example.musicapp.WaveInstance;
+import com.example.musicapp.WavePlayer;
+import com.example.musicapp.wave.Wave;
+
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements WaveInstanceObserver{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>
+        implements WavesObserver {
 
-    private ArrayList<Wave> waves;
+    private static MainPresenter mainPresenter;
+    private ArrayList<com.example.musicapp.wave.Wave> waves;
     private SinWaveHarmonic[] sinWaveHarmonics;
     private ArrayList<WaveHarmonic> waveHarmonicsArrayList;
     private ArrayList<ArrayList<SinWaveHarmonic>> sinArrayLists;
@@ -34,10 +50,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ViewHolder myViewHolder;
     Reverberation reverberation = Reverberation.getInstance();
 
-    public RecyclerViewAdapter(Context context, ArrayList<Wave> waves) {
+
+    public RecyclerViewAdapter(Context context, ArrayList<com.example.musicapp.wave.Wave> waves, MainPresenter mainPresenter) {
         inflater = LayoutInflater.from(context);
+        this.mainPresenter = mainPresenter;
         this.context = context;
         this.waves = waves;
+        Waves waves1 = Waves.getInstance();
+        waves1.registerObserver(this);
     }
 
     /**
@@ -57,26 +77,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
         final Wave wave = (Wave) waves.get(i);
-        String s;
-        s = "Частота: ";
-        s += String.valueOf(waves.get(i).getFrequency());
-        viewHolder.textFrequency.setText(s);
-        s = "Громкость: ";
-        s += String.valueOf(waves.get(i).getAmplitude());
-        s += "%";
-        viewHolder.textWaveVolume.setText(s);
-        if (waves.get(i).getChannelsNumber() == 2)
-            viewHolder.textStereo.setText(R.string.stereo);
-        else
-            viewHolder.textStereo.setText(R.string.mono);
-        s = "Кол-во гармоник: ";
-        s += String.valueOf(waves.get(i).getHarmonicsNumber());
-        viewHolder.textViewNumberOfHarmonics.setText(s);
-        if(waves.get(i).getType().equals(Type.SAW))
-            viewHolder.textType.setText(R.string.saw);
-        else
-            viewHolder.textType.setText(R.string.sin);
-        viewHolder.checkboxPhaseCorrection.setChecked(true);
+        viewHolder.textFrequency.setText(StringFormer.formString("Частота: ",String.valueOf(waves.get(i).getFrequency())));
+        viewHolder.textViewNumberOfHarmonics.setText(StringFormer.formString("Гармоники: ",
+                String.valueOf(waves.get(i).getHarmonicsNumber())));
+        viewHolder.textViewDigitCapacity.setText("Разрядность: ");
+        viewHolder.imageViewType.setImageResource(waves.get(i).getImageId());
         viewHolder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,11 +93,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.menu_item_change: {
-                                waveInstance.registerWaveInstanceObserver(RecyclerViewAdapter.this);
+                                //waveInstance.registerWaveInstanceObserver(RecyclerViewAdapter.this);
                                 wavePosition = i;
                                 myViewHolder = viewHolder;
                                 Intent intent = new Intent(context, WaveDialogActivity.class);
-                                intent.putExtra("wave", waves.get(i));
+                                //intent.putExtra("wave", waves.get(i));
                                 context.startActivity(intent);
                                 break;
                             }
@@ -101,12 +106,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             }*/
                             case R.id.menu_item_showGraph:{
                                 Intent intent = new Intent(context, GraphDialogActivity.class);
-                                intent.putExtra("buffer", waves.get(i).createBuffer());
+                                ComplexWaveBuffer complexWaveBuffer = new ComplexWaveBuffer(waves.get(i),1000);
+                                intent.putExtra("buffer", complexWaveBuffer.createBufferSingleThread());
+                                //intent.putExtra("buffer", waves.get(i).createBuffer());
                                 context.startActivity(intent);
                                 break;
                             }
                             case R.id.menu_item_delete: {
-                                waves.remove(i);
+                                mainPresenter.deleteWave(i);
+                                //waves.remove(i);
                                 notifyDataSetChanged();
                                 break;
                             }
@@ -120,7 +128,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 popupMenu.show();
             }
         });
-        viewHolder.imageButtonAddHarmonic.setOnClickListener(new View.OnClickListener() {
+       /* viewHolder.imageButtonAddHarmonic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 waveInstance.registerWaveInstanceObserver(RecyclerViewAdapter.this);
@@ -132,8 +140,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 intent.putParcelableArrayListExtra("Array", waves.get(i).getWaveHarmonics());
                 context.startActivity(intent);
             }
-        });
-        viewHolder.imageButtonPlay.setOnClickListener(new View.OnClickListener() {
+        });*/
+       /* viewHolder.imageButtonPlay.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
@@ -169,9 +177,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     toneGenerator = new ToneGenerator(mBuffer);
                     toneGenerator.makeMonoSound();
                 }*/
-            }
-        });
-        viewHolder.imageButtonStop.setOnClickListener(new View.OnClickListener() {
+        /*    }
+        });*/
+      /*  viewHolder.imageButtonStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                wavePlayer.stopWavePlayer();
@@ -179,7 +187,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                frequency.setFrequency(waves.get(i).getFrequency());
                reverberation.clearEcho();
             }
-        });
+        });*/
     }
 
     @Override
@@ -187,88 +195,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return waves.size();
     }
 
-    @Override
-    public void updateWaveInstance(Wave wave) {
-        if(wavePosition == -1)
-            return;
-        waves.set(wavePosition,wave);
-        waveInstance.removeWaveInstanceObserver(RecyclerViewAdapter.this);
-        String s;
-        s = "Частота: ";
-        s += String.valueOf(waves.get(wavePosition).getFrequency());
-        myViewHolder.textFrequency.setText(s);
-        s = "Громкость: ";
-        s += String.valueOf(waves.get(wavePosition).getAmplitude());
-        s += "%";
-        myViewHolder.textWaveVolume.setText(s);
-        if (waves.get(wavePosition).getChannelsNumber() == 2)
-            myViewHolder.textStereo.setText(R.string.stereo);
-        else
-            myViewHolder.textStereo.setText(R.string.mono);
-        s = "Кол-во гармоник: ";
-        s += String.valueOf(waves.get(wavePosition).getHarmonicsNumber());
-        myViewHolder.textViewNumberOfHarmonics.setText(s);
-        if(waves.get(wavePosition).getType().equals(Type.SAW))
-            myViewHolder.textType.setText(R.string.saw);
-        else
-            myViewHolder.textType.setText(R.string.sin);
-        wavePosition = -1;
-        wave.checkMaxAmplitude();
+    public Wave getItem(int i){
+        return waves.get(i);
     }
 
     @Override
-    public void updateWaveHarmonicInstance(ArrayList<WaveHarmonic> waveHarmonics) {
-        if(wavePosition == -1)
-            return;
-        waves.get(wavePosition).setWaveHarmonics(waveHarmonics);
-        waveInstance.removeWaveInstanceObserver(RecyclerViewAdapter.this);
-        String s;
-        s = "Кол-во гармоник: ";
-        s += String.valueOf(waves.get(wavePosition).getHarmonicsNumber());
-        myViewHolder.textViewNumberOfHarmonics.setText(s);
-    }
-
-
-    @Override
-    public void noResult() {
-        waveInstance.removeWaveInstanceObserver(RecyclerViewAdapter.this);
-        wavePosition = -1;
-    }
-
-
-    public void changeCurrentFrequency(float value){
-        if(wavePosition == -1)
-            return;
-        waves.get(wavePosition).setFrequency(waves.get(wavePosition).getFrequency()+value);
-        WaveHarmonicCreator.UpdateWaveHarmonics(waves.get(wavePosition));
-        String s;
-        s = "Частота: ";
-        s += String.valueOf(waves.get(wavePosition).getFrequency());
-        myViewHolder.textFrequency.setText(s);
+    public void update(Wave wave) {
+       notifyDataSetChanged();
     }
 
     /**
      * Реализация класса ViewHolder, хранящего ссылки на виджеты.
      */
     static class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textStereo, textFrequency, textWaveVolume, textType, menu,
-                textViewNumberOfHarmonics, textViewPhaseCorrection ;
-        private ImageButton imageButtonPlay, imageButtonStop, imageButtonAddHarmonic;
-        private CheckBox checkboxPhaseCorrection ;
+        private TextView textStereo, textFrequency, textViewDigitCapacity, menu,
+                textViewNumberOfHarmonics;
+        private ImageView imageViewType;
+
 
         public ViewHolder(View view) {
             super(view);
             textStereo = view.findViewById(R.id.textStereo);
             textFrequency = view.findViewById(R.id.textFrequency);
-            textWaveVolume = view.findViewById(R.id.textWaveVolume);
-            textType = view.findViewById(R.id.textType);
             textViewNumberOfHarmonics = view.findViewById(R.id.textViewNumberOfHarmonics);
-            textViewPhaseCorrection = view.findViewById(R.id.textViewPhaseCorrection);
-            imageButtonPlay = view.findViewById(R.id.imageButtonPlay);
-            imageButtonStop = view.findViewById(R.id.imageButtonStop);
-            imageButtonAddHarmonic = view.findViewById(R.id.imageButtonAddHarmonic);
-            checkboxPhaseCorrection = view.findViewById(R.id.checkboxPhaseCorrection);
+            textViewDigitCapacity =view.findViewById(R.id.textViewDigitCapacity);
+            imageViewType = view.findViewById(R.id.imageViewType);
             menu = view.findViewById(R.id.menu);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mainPresenter.onRecyclerViewItemSelected(getLayoutPosition());
+                }
+            });
         }
     }
 }

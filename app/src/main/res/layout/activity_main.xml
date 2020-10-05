@@ -1,112 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".main.MainActivity">
 
     <Button
         android:id="@+id/buttonAdd"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/border"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="@string/addWave"
         android:textAlignment="center"
         android:textAppearance="?android:attr/textAppearanceButton"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorPrimary"
         android:textSize="22sp" />
-    <!--  <EditText
-          android:id="@+id/editText2"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:ems="10"
-          android:descendantFocusability="beforeDescendants"
-          android:focusableInTouchMode="true"
-          android:inputType="numberDecimal" />-->
 
-    <!--  <Button
-          android:id="@+id/mp3_Button"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="@string/playmp3" />-->
-
-   <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/editTextFirstRatio"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/firstRatio"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/editTextSecondRatio"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/secondRatio"
-            android:inputType="numberDecimal" />
-        <Button
-            android:id="@+id/buttonPlus1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/plus1" />
-
-        <Button
-            android:id="@+id/buttonMinus1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/minus1" />
-
-
-        <Button
-            android:id="@+id/buttonPlus50"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/plus50" />
-
-        <Button
-            android:id="@+id/buttonMinus50"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/minus50" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/buttonAddHarmonic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/addOneHarmonics" />
-
-        <Button
-            android:id="@+id/buttonDeleteHarmonic"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/deleteOneHarmonics" />
-    </LinearLayout>
+    <View
+        android:id="@+id/separator"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_above="@id/recyclerView"
+        android:background="@drawable/separator" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/fragmentContainer"
+        android:layout_below="@id/buttonAdd"
+
         android:visibility="visible"
         tools:listitem="@layout/cardview" />
 
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

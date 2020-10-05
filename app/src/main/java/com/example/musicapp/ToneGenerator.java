@@ -7,6 +7,8 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.musicapp.main.MainActivity;
+
 import java.util.ArrayList;
 
 
@@ -27,15 +29,14 @@ public class ToneGenerator {
 
     ToneGenerator() {
         MainActivity mainActivity = new MainActivity();
-        float[] volume = mainActivity.getVolume();
         duration = 16384;
         int frequency = 500;
         int frame;
         buffer = new short[duration];
         frame = sampleRate / frequency;
         for (int i = 0; i < duration; i++) {
-            buffer[i] = (short) ((float) (Math.sin(2 * Math.PI * i / frame) * Short.MAX_VALUE * volume[0])
-                    + Math.sin(2 * Math.PI * i / (frame) * Short.MAX_VALUE * volume[1]))//* 0.91
+            buffer[i] = (short) ((float) (Math.sin(2 * Math.PI * i / frame) * Short.MAX_VALUE )
+                    + Math.sin(2 * Math.PI * i / (frame) * Short.MAX_VALUE ))//* 0.91
                     /*+ Math.sin(2 * Math.PI * i / (float)(period/3))*Short.MAX_VALUE*0.92
                     + Math.sin(2 * Math.PI * i / (float)(period/4))*Short.MAX_VALUE*0.86
                     + Math.sin(2 * Math.PI * i / (float)(period/5))*Short.MAX_VALUE*0.86

@@ -8,4 +8,25 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="Theme.MainActivity" parent="@style/AppTheme">
+        <item name="android:windowActivityTransitions">true</item>
+    </style>
+
+    <style name="Theme.WaveTunerActivity" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:activityOpenEnterAnimation">@anim/activity_grow</item>
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/transition
+        </item>
+
+        <item name="android:windowSharedElementExitTransition">
+            @transition/transition
+        </item>
+    </style>
+
+    <style name="Theme.WaveDialogActivity" parent="@android:style/Theme.Material.Light.Dialog">
+        <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
 </resources>

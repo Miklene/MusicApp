@@ -9,6 +9,9 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.musicapp.common.Type;
+import com.example.musicapp.main.MainActivity;
+
 public class WavePlayer implements frequencyObserver{
     private Wave wave;
     private float[] myPhase = new float[32];
@@ -51,7 +54,6 @@ public class WavePlayer implements frequencyObserver{
         AudioManager manager = (AudioManager) context
                 .getSystemService(Context.AUDIO_SERVICE);
         final int systemVolume = manager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        MainActivity mainActivity = MainActivity.activity;
         //duration = mainActivity.getDuration();
         if(myFrequency.getFrequency()!=wave.getFrequency())
             myFrequency.setFrequency(wave.getFrequency());
@@ -65,7 +67,6 @@ public class WavePlayer implements frequencyObserver{
 
 
     private void playWave(){
-
         thread = new Thread(new Runnable() {
             PresetReverb reverb;
             @RequiresApi(api = Build.VERSION_CODES.M)

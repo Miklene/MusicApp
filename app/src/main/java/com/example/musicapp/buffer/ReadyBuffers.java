@@ -1,4 +1,4 @@
-package com.example.musicapp.wave;
+package com.example.musicapp.buffer;
 
 import java.util.*;
 

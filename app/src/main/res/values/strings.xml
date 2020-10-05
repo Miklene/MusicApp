@@ -2,6 +2,8 @@
     <string name="app_name">MusicApp</string>
     <string name="invalid_frequency">Неверное значение частоты</string>
     <string name="frequence">Частота</string>
+    <string name="frequencyHertz">Частота (Гц)</string>
+    <string name="enterFrequency">Введите частоту</string>
     <string name="duration">500000</string>
     <string name="addWave">Добавить волну</string>
     <string name="play">Воспроизвести</string>
@@ -16,7 +18,8 @@
     <string name="sin">Синус</string>
     <string name="saw">Пила</string>
     <string name="violin">Скрипка</string>
-    <string name="numberOfHarmonic">Число гармоник</string>
+    <string name="numberOfHarmonic">Кол-во гармоник</string>
+    <string name="enterHarmonicsNumber">Введите кол-во гармоник</string>
     <string name="stop">Стоп</string>
     <string name="change">Изменить</string>
     <string name="delete">Удалить</string>
@@ -37,8 +40,13 @@
     <string name="fastAdd">Скрипка</string>
     <string name="firstRatio">1-ый коэф.</string>
     <string name="secondRatio">2-ой коэф.</string>
-
     <string name="isFloat">Float буфер</string>
+    <string name="textViewFrequency">Частота: </string>
+    <string name="textViewHarmonics">Гармоники: </string>
+    <string name="textViewDigitCapacity">Разрядность: </string>
+    <string name="Hertz">Гц, </string>
+    <string name="transition">transition</string>
+    <string name="step">Шаг</string>
 
 
 </resources>

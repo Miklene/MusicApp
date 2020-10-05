@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="2dp"
+    android:orientation="vertical">
+
+   <View
+        android:id="@+id/separator"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/separator" />
+
+    <ImageView
+        android:id="@+id/imageViewPlayFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/border"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_round_play_arrow_24"
+        android:transitionName="@string/transition" />
+
+    <ImageView
+        android:id="@+id/imageViewStopFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/border"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_baseline_stop_24" />
+
+    <TextView
+        android:id="@+id/textViewAllParameters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toEndOf="@id/imageViewPlayFragment"
+        android:textSize="16sp" />
+    <!-- <TextView
+         android:id="@+id/textFrequencyFragment"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="5dp"
+         android:layout_marginTop="2dp"
+         android:layout_marginRight="5dp"
+         android:layout_marginBottom="2dp"
+         android:layout_toEndOf="@id/imageViewPlayFragment"
+         android:text="@string/textViewFrequency"
+         android:textSize="16sp" />
+
+     <TextView
+         android:id="@+id/textStereoFragment"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/textFrequencyFragment"
+         android:layout_marginLeft="5dp"
+         android:layout_marginTop="2dp"
+         android:layout_marginRight="5dp"
+         android:layout_marginBottom="2dp"
+         android:layout_toEndOf="@id/imageViewPlayFragment"
+         android:textSize="16sp" />
+
+     <TextView
+         android:id="@+id/textViewNumberOfHarmonicsFragment"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="5dp"
+         android:layout_marginTop="2dp"
+         android:layout_marginRight="5dp"
+         android:layout_marginBottom="2dp"
+         android:layout_toEndOf="@id/textFrequencyFragment"
+         android:text="@string/textViewHarmonics"
+         android:textSize="16sp" />
+
+     <TextView
+         android:id="@+id/textViewDigitCapacityFragment"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@id/textViewNumberOfHarmonicsFragment"
+         android:layout_marginLeft="5dp"
+         android:layout_marginTop="2dp"
+         android:layout_marginRight="5dp"
+         android:layout_marginBottom="2dp"
+         android:layout_toEndOf="@id/textStereoFragment"
+         android:text="@string/textViewDigitCapacity"
+         android:textSize="16sp" />-->
+</RelativeLayout>

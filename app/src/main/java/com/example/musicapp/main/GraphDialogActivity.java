@@ -1,4 +1,4 @@
-package com.example.musicapp;
+package com.example.musicapp.main;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.Nullable;
 
+import com.example.musicapp.R;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -21,7 +22,7 @@ public class GraphDialogActivity extends Activity {
         setContentView(R.layout.activity_dialog_graph);
         checkboxHorizontalZoomScroll = findViewById(R.id.checkboxHorizontalZoomScroll);
         Bundle arguments = getIntent().getExtras();
-        short[] buffer  = (short[]) arguments.get("buffer");
+        float[] buffer  = (float[]) arguments.get("buffer");
         graph = findViewById(R.id.graph);
         graph.getViewport().setScrollable(true);
         graph.getViewport().setScrollableY(true);
@@ -50,6 +51,4 @@ public class GraphDialogActivity extends Activity {
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(points);
         graph.addSeries(series);
     }
-
-
 }

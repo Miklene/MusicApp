@@ -25,6 +25,7 @@
     <string name="delete">Удалить</string>
     <string name="addHarmonic">Добавить гармонику</string>
     <string name="showGraph">Показать график</string>
+    <string name="createWav">Создать Wav</string>
     <string name="playmp3">Воспроизвести mp3</string>
     <string name="plus">+</string>
     <string name="plus1">+1</string>

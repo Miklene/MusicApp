@@ -22,6 +22,10 @@ import com.example.musicapp.WaveCreator;
 import com.example.musicapp.buffer.ComplexWaveBuffer;
 import com.example.musicapp.common.Type;
 import com.example.musicapp.model.Waves;
+import com.example.musicapp.wav.WavFile;
+import com.example.musicapp.wav.WavFileWriter;
+import com.example.musicapp.wav.WavHeader;
+import com.example.musicapp.wav.WavHeader32Bit;
 import com.example.musicapp.wave.WaveFactory;
 import com.example.musicapp.wave_dialog.WaveDialogActivity;
 import com.example.musicapp.WaveHarmonic;
@@ -29,6 +33,8 @@ import com.example.musicapp.WaveInstance;
 import com.example.musicapp.WaveInstanceObserver;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -55,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mainFragment = new MainFragment();
-        mainPresenter = new MainPresenter(this);
+        mainPresenter = new MainPresenter(this, MainActivity.this);
         recyclerView = findViewById(R.id.recyclerView);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(MainActivity.this, waves.getWaves(), mainPresenter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -63,14 +69,24 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         mainPresenter.attachRecyclerViewAdapter(adapter);
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(this);
-        File myFile = new File(this.getExternalFilesDir(null), "text.txt");
-        if(!myFile.exists()) {
+       /* File myFile = new File(this.getExternalFilesDir(null), "wave.wav");
+        if (!myFile.exists()) {
             try {
                 myFile.createNewFile();
+                //
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        ComplexWaveBuffer complexWaveBuffer = new ComplexWaveBuffer(WaveFactory.createWave(
+                Type.VIOLIN, 200, 31, 0), 44100);
+        float[] buffer = complexWaveBuffer.createBufferSingleThread();
+        WavHeader wavHeader = new WavHeader32Bit((short) 2, buffer.length);
+        WavFile wavFile = new WavFile(wavHeader, buffer);
+        //FileOutputStream writer = new FileOutputStream(myFile);
+        WavFileWriter wavFileWriter = new WavFileWriter(wavFile, myFile);
+        wavFileWriter.writeFile();*/
+
         //speedTest();
     }
 
@@ -176,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         Toast toast;
         items = 1000;
         ComplexWaveBuffer complexWaveBuffer = new ComplexWaveBuffer(
-                WaveFactory.createWave(Type.VIOLIN, 200, 31,0), items);
+                WaveFactory.createWave(Type.VIOLIN, 200, 31, 0), items);
         start = System.nanoTime();
         for (int i = 0; i < 1000; i++) {
             complexWaveBuffer.createBufferSingleThread();
@@ -185,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         singleResult = finish - start;
         result = "Single thread " + items * 2 + " items: " + singleResult / 1000;
         System.out.println(result);
-        result = String.valueOf(singleResult/1000);
+        result = String.valueOf(singleResult / 1000);
         toast = Toast.makeText(this, result, Toast.LENGTH_LONG);
         toast.show();
         start = System.nanoTime();
@@ -195,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         finish = System.nanoTime();
         multiResult = finish - start;
         System.out.println("Multi thread " + items * 2 + " items: " + multiResult / 1000);
-        result = String.valueOf(singleResult/1000 - multiResult/1000);
+        result = String.valueOf(singleResult / 1000 - multiResult / 1000);
         toast = Toast.makeText(this, result, Toast.LENGTH_LONG);
         toast.show();
     }

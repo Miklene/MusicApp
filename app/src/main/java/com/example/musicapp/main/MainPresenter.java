@@ -4,12 +4,20 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import com.example.musicapp.buffer.ComplexWaveBuffer;
 import com.example.musicapp.common.Type;
 import com.example.musicapp.model.database.WaveDbHelper;
 import com.example.musicapp.model.WavePlayer;
 import com.example.musicapp.model.Waves;
+import com.example.musicapp.wav.WavFile;
+import com.example.musicapp.wav.WavFileWriter;
+import com.example.musicapp.wav.WavHeader;
+import com.example.musicapp.wav.WavHeader32Bit;
 import com.example.musicapp.wave.Wave;
 import com.example.musicapp.wave.WaveFactory;
+
+import java.io.File;
+import java.io.IOException;
 
 public class MainPresenter {
 
@@ -20,10 +28,13 @@ public class MainPresenter {
     private Wave currentWave;
     private int checkedItem = -1;
     private Waves waves;
+    private Context context;
 
 
-    public MainPresenter(MainView mainView) {
+
+    public MainPresenter(MainView mainView, Context context) {
         this.mainView = mainView;
+        this.context = context;
         waves = Waves.getInstance();
         wavePlayer = WavePlayer.getInstance();
         SQLiteDatabase database  = new WaveDbHelper((Context)mainView).getWritableDatabase();
@@ -85,6 +96,29 @@ public class MainPresenter {
             }
         });
         thread.start();*/
+    }
+
+    public void createWav(int index){
+        String fileName;
+        Wave wave = waves.getWave(index);
+        ComplexWaveBuffer complexWaveBuffer = new ComplexWaveBuffer(WaveFactory.createWave(
+                wave.getType(), wave.getFrequency(), wave.getHarmonicsNumber(), wave.getTableId()), 88200);
+        fileName = "wave" + wave.getFrequency() + "," + wave.getHarmonicsNumber() + ".wav";
+        File myFile = new File(context.getExternalFilesDir(null), fileName);
+        if (!myFile.exists()) {
+            try {
+                myFile.createNewFile();
+                //
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        float[] buffer = complexWaveBuffer.createBufferSingleThread();
+        WavHeader wavHeader = new WavHeader32Bit((short) 2, buffer.length);
+        WavFile wavFile = new WavFile(wavHeader, buffer);
+        //FileOutputStream writer = new FileOutputStream(myFile);
+        WavFileWriter wavFileWriter = new WavFileWriter(wavFile, myFile);
+        wavFileWriter.writeFile();
     }
 
     private void removeFragmentIfExist() {

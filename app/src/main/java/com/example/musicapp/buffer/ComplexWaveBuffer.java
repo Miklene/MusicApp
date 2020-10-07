@@ -72,7 +72,7 @@ public class ComplexWaveBuffer {
     }
 
     private float[] correctAmplitude(float[] buffer) {
-        float correctionValue = findMaxAmplitude(buffer) + 0.0001f;
+        float correctionValue = findMaxAmplitude(buffer)*1.2f;
         for (int i = 0; i < buffer.length; i++) {
             buffer[i] = buffer[i] / correctionValue;
         }

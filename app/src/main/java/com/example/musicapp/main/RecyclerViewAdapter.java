@@ -118,6 +118,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 notifyDataSetChanged();
                                 break;
                             }
+                            case R.id.menu_item_createWav: {
+                                mainPresenter.createWav(i);
+                                break;
+                            }
                             default: {
                                 break;
                             }

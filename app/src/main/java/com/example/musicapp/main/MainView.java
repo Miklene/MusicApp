@@ -10,6 +10,8 @@ public interface MainView {
 
     void removeFragment();
 
+    void startWaveTunerActivity(int waveId);
+
     void startDialogWaveActivity();
 
     void updateFragment(float frequency, int harmonicsNumber);

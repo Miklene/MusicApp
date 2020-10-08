@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.example.musicapp.buffer.ComplexWaveBuffer;
-import com.example.musicapp.common.Type;
 import com.example.musicapp.model.database.WaveDbHelper;
 import com.example.musicapp.model.WavePlayer;
 import com.example.musicapp.model.Waves;
@@ -15,6 +14,7 @@ import com.example.musicapp.wav.WavHeader;
 import com.example.musicapp.wav.WavHeader32Bit;
 import com.example.musicapp.wave.Wave;
 import com.example.musicapp.wave.WaveFactory;
+import com.example.musicapp.wave_tuner.WaveTunerView;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +22,7 @@ import java.io.IOException;
 public class MainPresenter {
 
     private MainView mainView;
+    static WaveTunerView waveTunerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private MainFragment mainFragment;
     private WavePlayer wavePlayer;
@@ -53,22 +54,26 @@ public class MainPresenter {
         mainView.startDialogWaveActivity();
     }
 
-    public void onRecyclerViewItemSelected(int layoutPosition) {
-        currentWave = recyclerViewAdapter.getItem(layoutPosition);
+    public void onRecyclerViewItemSelected(int wavePosition) {
+        currentWave = recyclerViewAdapter.getItem(wavePosition);
         if(mainFragment==null) {
             createFragment(writeInBundle(currentWave));
         } else{
             mainView.updateFragment(currentWave.getFrequency(), currentWave.getHarmonicsNumber());
         }
-        if (checkedItem != layoutPosition) {
-            checkedItem = layoutPosition;
+        if (checkedItem != wavePosition) {
+            checkedItem = wavePosition;
             stopWavePlayer();
         }
         startWavePlayer();
     }
 
+    public void onFragmentClicked(){
+        mainView.startWaveTunerActivity(waves.getWavePosition(currentWave));
+    }
+
     private void startWavePlayer() {
-        wavePlayer.playWave(currentWave, 1000);
+        wavePlayer.playWave(currentWave, 2000);
     }
 
     private void stopWavePlayer() {

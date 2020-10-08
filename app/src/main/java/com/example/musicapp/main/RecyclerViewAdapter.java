@@ -19,6 +19,7 @@ import com.example.musicapp.Frequency;
 import com.example.musicapp.R;
 import com.example.musicapp.Reverberation;
 import com.example.musicapp.SinWaveHarmonic;
+import com.example.musicapp.common.GraphDialogActivity;
 import com.example.musicapp.common.StringFormer;
 import com.example.musicapp.ToneGenerator;
 import com.example.musicapp.model.Waves;

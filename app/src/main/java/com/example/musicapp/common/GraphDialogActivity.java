@@ -1,4 +1,4 @@
-package com.example.musicapp.main;
+package com.example.musicapp.common;
 
 import android.app.Activity;
 import android.os.Bundle;

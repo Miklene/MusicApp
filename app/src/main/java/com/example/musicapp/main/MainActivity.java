@@ -1,10 +1,8 @@
 package com.example.musicapp.main;
 
 import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -22,23 +20,14 @@ import com.example.musicapp.WaveCreator;
 import com.example.musicapp.buffer.ComplexWaveBuffer;
 import com.example.musicapp.common.Type;
 import com.example.musicapp.model.Waves;
-import com.example.musicapp.wav.WavFile;
-import com.example.musicapp.wav.WavFileWriter;
-import com.example.musicapp.wav.WavHeader;
-import com.example.musicapp.wav.WavHeader32Bit;
 import com.example.musicapp.wave.WaveFactory;
 import com.example.musicapp.wave_dialog.WaveDialogActivity;
 import com.example.musicapp.WaveHarmonic;
 import com.example.musicapp.WaveInstance;
 import com.example.musicapp.WaveInstanceObserver;
+import com.example.musicapp.wave_tuner.WaveTunerActivity;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import static android.os.Environment.DIRECTORY_MUSIC;
 
 
 public class MainActivity extends AppCompatActivity implements WaveInstanceObserver,
@@ -130,12 +119,18 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
     }
 
     public void onFragmentClicked() {
+        mainPresenter.onFragmentClicked();
+    }
+
+    @Override
+    public void startWaveTunerActivity(int waveId) {
         Bundle bundle;
         View v = mainFragment.getView().findViewById(R.id.imageViewPlayFragment);
         ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(
                 MainActivity.this, v, MainActivity.this.getString(R.string.transition));
         //bundle = activityOptions.toBundle();
         Intent intent = new Intent(MainActivity.this, WaveTunerActivity.class);
+        intent.putExtra("id",  waveId);
         startActivity(intent);//, bundle);
         overridePendingTransition(R.anim.activity_grow, R.anim.activity_hide);
     }

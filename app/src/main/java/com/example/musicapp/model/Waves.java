@@ -48,6 +48,10 @@ public class Waves implements WavesSubject {
         deleteWaveFromDatabase(id);
     }
 
+    public int getWavePosition(Wave wave){
+        return waveArrayList.indexOf(wave);
+    }
+
     public Wave getWave(int index){
         return waveArrayList.get(index);
     }

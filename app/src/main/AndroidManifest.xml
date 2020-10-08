@@ -42,12 +42,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".main.GraphDialogActivity"
+        <activity android:name=".common.GraphDialogActivity"
             android:theme="@style/Theme.WaveTunerActivity"
             android:screenOrientation="fullSensor"
             />
 
-        <activity android:name=".main.WaveTunerActivity"
+        <activity android:name=".wave_tuner.WaveTunerActivity"
             android:screenOrientation="fullSensor"
             />
     </application>

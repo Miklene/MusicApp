@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         toast.show();
         start = System.nanoTime();
         for (int i = 0; i < 1000; i++) {
-            complexWaveBuffer.createBuffer();
+            complexWaveBuffer.createBufferMultiThread();
         }
         finish = System.nanoTime();
         multiResult = finish - start;

@@ -41,7 +41,7 @@ public class ComplexWaveBuffer {
     }
 
 
-    public float[] createBuffer() {
+    public float[] createBufferMultiThread() {
         float[] buffer;
         int harmonicsNumber = wave.getWaveHarmonics().size();
         readyBuffers = new ReadyBuffers(harmonicsNumber);

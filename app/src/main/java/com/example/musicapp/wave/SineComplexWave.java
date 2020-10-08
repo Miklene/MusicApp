@@ -16,12 +16,12 @@ public class SineComplexWave extends ComplexWave {
 
     @Override
     void createMainTone(float frequency) {
-        mainTone = new SinWave(frequency,0,0);
+        mainTone = new SinWave(frequency,100,0);
     }
 
     @Override
     void createWaveHarmonics(float frequency, int harmonicsNumber) {
         for(int i =0;i<harmonicsNumber; i++)
-            waveHarmonics.add(new SinWave(frequency*(i+2), 0, 0));
+            waveHarmonics.add(new SinWave(frequency*(i+2), 100, 0));
     }
 }

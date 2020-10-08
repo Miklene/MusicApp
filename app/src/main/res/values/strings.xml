@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">MusicApp</string>
+    <string name="app_name">Ear trainer</string>
+    <string name="app_name_rus">Тренер слуха</string>
     <string name="invalid_frequency">Неверное значение частоты</string>
     <string name="frequence">Частота</string>
     <string name="frequencyHertz">Частота (Гц)</string>

@@ -47,7 +47,7 @@
             android:screenOrientation="fullSensor"
             />
 
-        <activity android:name=".main.WaveTunerActivity"
+        <activity android:name=".wave_tuner.WaveTunerActivity"
             android:screenOrientation="fullSensor"
             />
     </application>

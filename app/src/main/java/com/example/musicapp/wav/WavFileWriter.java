@@ -83,11 +83,14 @@ public class WavFileWriter {
 
     public static byte[] floatToByte( float fl, boolean inverse) {
         float f, fy;
-        byte[] bytes = new byte[4];
+        byte[] bytes = new byte[3];
         int intBits = Float.floatToIntBits(fl);
         byte[] b = {(byte) (intBits ), (byte) (intBits >> 8), (byte) (intBits >> 16), (byte) (intBits >> 24)};
         byte[] by = new byte[4];
-        if (inverse)
+        bytes[2] = (byte)((intBits >> 24) & 0xff);
+        bytes[1] = (byte)((intBits >> 16) & 0xff);
+        bytes[0] = (byte)((intBits >> 8) & 0xff);
+       /* if (inverse)
             // return new byte[] {(byte) (intBits >> 24), (byte) (intBits >> 16), (byte) (intBits >> 8), (byte) (intBits)};
             //byte[] b = {(byte) (intBits ), (byte) (intBits >> 8), (byte) (intBits >> 16), (byte) (intBits >> 24)};
             for (int i = 3, j = 0; i > -1; i--, j++) {
@@ -98,7 +101,7 @@ public class WavFileWriter {
             for (int i = 0; i < 4; i++) {
                 int offset = (bytes.length - 1 - i) * 8;
                 bytes[i] = (byte) ((intBits >>> offset) & 0xFF);
-            }
+            }*/
         return bytes;
     }
 }

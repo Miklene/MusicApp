@@ -20,11 +20,12 @@
             android:id="@+id/imageViewPlayWaveTuner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:layout_margin="5dp"
             android:background="@drawable/border"
             android:clickable="true"
+            android:contentDescription="@string/play"
             android:focusable="true"
             android:src="@drawable/ic_round_play_arrow_24" />
 
@@ -32,44 +33,134 @@
             android:id="@+id/imageViewStopWaveTuner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:layout_margin="5dp"
             android:background="@drawable/border"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/ic_baseline_stop_24" />
 
-        <Button
-            android:id="@+id/buttonIncreaseFrequency"
+        <ImageView
+            android:id="@+id/imageViewIncreaseFrequencyWaveTuner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@id/imageViewPlayWaveTuner" />
+            android:layout_below="@+id/editTextFrequencyWaveTuner"
+            android:layout_alignParentEnd="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border_rectangle"
+            android:gravity="center"
+            android:padding="3dp"
+            android:src="@drawable/ic_baseline_add_24" />
 
-        <Button
-            android:id="@+id/buttonDecreaseFrequency"
+        <ImageView
+            android:id="@+id/imageViewDecreaseFrequencyWaveTuner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/imageViewPlayWaveTuner" />
-
-        <TextView
-            android:id="@+id/textViewStep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/buttonDecreaseFrequency"
+            android:layout_below="@id/editTextFrequencyWaveTuner"
             android:layout_alignParentStart="true"
-            android:text="@string/step"
-            android:textSize="24sp" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border_rectangle"
+            android:gravity="center"
+            android:padding="3dp"
+            android:src="@drawable/ic_baseline_remove_24" />
 
         <EditText
-            android:id="@+id/editTextStepWaveTuner"
+            android:id="@+id/editTextFrequencyWaveTuner"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewStep"
-            android:layout_alignParentStart="true"
+            android:layout_below="@id/imageViewPlayWaveTuner"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/border_rectangle"
             android:ems="10"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:paddingStart="10dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="5dp" />
+
+        <SeekBar
+            android:id="@+id/seekBarWaveTuner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextFrequencyWaveTuner"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toStartOf="@id/imageViewIncreaseFrequencyWaveTuner"
+            android:layout_toEndOf="@id/imageViewDecreaseFrequencyWaveTuner"
+            android:max="3500"
+            android:progressBackgroundTint="@color/colorPrimaryLight"
+            android:progressTint="@color/colorPrimary"
+            android:thumbTint="@color/colorPrimary" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/seekBarWaveTuner">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/textViewStep"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="5dp"
+                    android:text="@string/step"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/editTextStepWaveTuner"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewStep"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/border_rectangle"
+                    android:ems="10"
+                    android:inputType="numberDecimal"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="5dp" />
+
+                <TextView
+                    android:id="@+id/textViewSoundEffectsWaveTuner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextStepWaveTuner"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="5dp"
+                    android:text="@string/soundEffects"
+                    android:textSize="16sp" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxAmplitudeDynamicWaveTuner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewSoundEffectsWaveTuner"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="@string/amplitudeDynamic" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxNormalizationWaveTuner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/checkBoxAmplitudeDynamicWaveTuner"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="@string/normalization" />
+            </RelativeLayout>
+        </ScrollView>
     </RelativeLayout>
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 
 import com.example.musicapp.buffer.ComplexWaveBuffer;
+import com.example.musicapp.buffer.WaveBuffer;
 import com.example.musicapp.common.RecordParameters;
 import com.example.musicapp.wave.Wave;
 
@@ -12,7 +13,8 @@ public class WavePlayer implements RecordParameters {
 
     private Thread thread;
     private AudioTrack audioTrack;
-    private ComplexWaveBuffer complexWaveBuffer;
+    //private ComplexWaveBuffer complexWaveBuffer;
+    private WaveBuffer waveBuffer;
     private static WavePlayer wavePlayer;
 
     private WavePlayer() {
@@ -24,10 +26,11 @@ public class WavePlayer implements RecordParameters {
         return wavePlayer;
     }
 
-    public void playWave(Wave wave, int duration) {
+    public void playWave(WaveBuffer waveBuffer/*Wave wave, int duration*/) {
         if(thread != null)
             return;
-        complexWaveBuffer = new ComplexWaveBuffer(wave,duration);
+        //complexWaveBuffer = new ComplexWaveBuffer(wave,duration);
+        this.waveBuffer = waveBuffer;
         play();
     }
 
@@ -36,7 +39,8 @@ public class WavePlayer implements RecordParameters {
             public void run() {
                 float[] buffer;
                 while (!Thread.currentThread().isInterrupted()) {
-                    buffer = complexWaveBuffer.createBufferSingleThread();
+                    //buffer = complexWaveBuffer.createBufferSingleThread();
+                    buffer = waveBuffer.createBuffer();
                     if (audioTrack != null) {
                         audioTrack.write(buffer, 0, buffer.length, AudioTrack.WRITE_BLOCKING);
                     } else {

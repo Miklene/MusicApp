@@ -5,7 +5,6 @@ import android.widget.Toast;
 
 import com.example.musicapp.common.Type;
 import com.example.musicapp.model.Waves;
-import com.example.musicapp.wave.WaveFactory;
 
 import org.apache.commons.math3.exception.NullArgumentException;
 

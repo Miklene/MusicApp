@@ -2,7 +2,6 @@ package com.example.musicapp.wave;
 
 import com.example.musicapp.common.Type;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 public interface Wave {

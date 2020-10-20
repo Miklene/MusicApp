@@ -15,20 +15,26 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.musicapp.Frequency;
+import com.example.musicapp.Deprecated.Frequency;
 import com.example.musicapp.R;
-import com.example.musicapp.Reverberation;
-import com.example.musicapp.SinWaveHarmonic;
+import com.example.musicapp.Deprecated.Reverberation;
+import com.example.musicapp.Deprecated.SinWaveHarmonic;
+import com.example.musicapp.buffer.WaveBuffer;
+import com.example.musicapp.buffer.WaveBufferSingleThread;
 import com.example.musicapp.common.GraphDialogActivity;
 import com.example.musicapp.common.StringFormer;
-import com.example.musicapp.ToneGenerator;
+import com.example.musicapp.Deprecated.ToneGenerator;
+import com.example.musicapp.model.Settings;
+import com.example.musicapp.model.WaveBufferBuilder;
 import com.example.musicapp.model.Waves;
 import com.example.musicapp.model.WavesObserver;
-import com.example.musicapp.buffer.ComplexWaveBuffer;
+import com.example.musicapp.sound_effect.AmplitudeDynamic;
+import com.example.musicapp.sound_effect.Normalization;
+import com.example.musicapp.sound_effect.SoundEffectsStatus;
 import com.example.musicapp.wave_dialog.WaveDialogActivity;
-import com.example.musicapp.WaveHarmonic;
-import com.example.musicapp.WaveInstance;
-import com.example.musicapp.WavePlayer;
+import com.example.musicapp.Deprecated.WaveHarmonic;
+import com.example.musicapp.Deprecated.WaveInstance;
+import com.example.musicapp.Deprecated.WavePlayer;
 import com.example.musicapp.wave.Wave;
 
 import java.util.ArrayList;
@@ -107,9 +113,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             }*/
                             case R.id.menu_item_showGraph:{
                                 Intent intent = new Intent(context, GraphDialogActivity.class);
-                                ComplexWaveBuffer complexWaveBuffer = new ComplexWaveBuffer(waves.get(i),1000);
-                                intent.putExtra("buffer", complexWaveBuffer.createBufferSingleThread());
-                                //intent.putExtra("buffer", waves.get(i).createBuffer());
+                                intent.putExtra("buffer",
+                                        WaveBufferBuilder.getWaveBuffer(waves.get(i), Settings.duration).createBuffer());
                                 context.startActivity(intent);
                                 break;
                             }

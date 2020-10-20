@@ -5,6 +5,7 @@ public class SoundEffectsStatus {
     public static boolean amplitudeDynamic = true;
     public static boolean normalization = true;
     public static boolean reverberation;
+
     /*private static SoundEffectsStatus instance;
 
     private SoundEffectsStatus() {

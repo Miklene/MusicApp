@@ -13,18 +13,18 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.musicapp.Frequency;
+import com.example.musicapp.Deprecated.Frequency;
 import com.example.musicapp.R;
-import com.example.musicapp.Wave;
-import com.example.musicapp.WaveCreator;
+import com.example.musicapp.Deprecated.Wave;
+import com.example.musicapp.Deprecated.WaveCreator;
 import com.example.musicapp.buffer.ComplexWaveBuffer;
 import com.example.musicapp.common.Type;
 import com.example.musicapp.model.Waves;
 import com.example.musicapp.wave.WaveFactory;
 import com.example.musicapp.wave_dialog.WaveDialogActivity;
-import com.example.musicapp.WaveHarmonic;
-import com.example.musicapp.WaveInstance;
-import com.example.musicapp.WaveInstanceObserver;
+import com.example.musicapp.Deprecated.WaveHarmonic;
+import com.example.musicapp.Deprecated.WaveInstance;
+import com.example.musicapp.Deprecated.WaveInstanceObserver;
 import com.example.musicapp.wave_tuner.WaveTunerActivity;
 
 import java.util.ArrayList;
@@ -79,6 +79,17 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         //speedTest();
     }
 
+
+    public static short floatToShort(float x) {
+        if (x < Short.MIN_VALUE) {
+            return Short.MIN_VALUE;
+        }
+        if (x > Short.MAX_VALUE) {
+            return Short.MAX_VALUE;
+        }
+        return (short) Math.round(x);
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -122,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         mainPresenter.onFragmentClicked();
     }
 
-  //  @Override
+    @Override
     public void startWaveTunerActivity(int waveId) {
         Bundle bundle;
         View v = mainFragment.getView().findViewById(R.id.imageViewPlayFragment);

@@ -5,6 +5,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.example.musicapp.buffer.ComplexWaveBuffer;
+import com.example.musicapp.buffer.WaveBuffer;
+import com.example.musicapp.buffer.WaveBufferSingleThread;
+import com.example.musicapp.common.TypeOfBuffer;
+import com.example.musicapp.model.Settings;
+import com.example.musicapp.model.WaveBufferBuilder;
 import com.example.musicapp.model.database.WaveDbHelper;
 import com.example.musicapp.model.WavePlayer;
 import com.example.musicapp.model.Waves;
@@ -73,7 +78,7 @@ public class MainPresenter {
     }
 
     private void startWavePlayer() {
-        wavePlayer.playWave(currentWave, 2000);
+        wavePlayer.playWave(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
     }
 
     private void stopWavePlayer() {
@@ -106,8 +111,9 @@ public class MainPresenter {
     public void createWav(int index){
         String fileName;
         Wave wave = waves.getWave(index);
-        ComplexWaveBuffer complexWaveBuffer = new ComplexWaveBuffer(WaveFactory.createWave(
-                wave.getType(), wave.getFrequency(), wave.getHarmonicsNumber(), wave.getTableId()), 88200);
+        /*ComplexWaveBuffer complexWaveBuffer = new ComplexWaveBuffer(WaveFactory.createWave(
+                wave.getType(), wave.getFrequency(), wave.getHarmonicsNumber(), wave.getTableId()), 88200);*/
+        WaveBuffer waveBuffer  = WaveBufferBuilder.getWaveBuffer(wave,88200);
         fileName = "wave" + wave.getFrequency() + "," + wave.getHarmonicsNumber() + ".wav";
         File myFile = new File(context.getExternalFilesDir(null), fileName);
         if (!myFile.exists()) {
@@ -118,7 +124,7 @@ public class MainPresenter {
                 e.printStackTrace();
             }
         }
-        float[] buffer = complexWaveBuffer.createBufferSingleThread();
+        float[] buffer = waveBuffer.createBuffer();
         WavHeader wavHeader = new WavHeader32Bit((short) 2, buffer.length);
         WavFile wavFile = new WavFile(wavHeader, buffer);
         //FileOutputStream writer = new FileOutputStream(myFile);

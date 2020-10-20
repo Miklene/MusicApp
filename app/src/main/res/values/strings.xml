@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ear trainer</string>
+    <string name="app_name">Ear&amp;Hz</string>
     <string name="app_name_rus">Тренер слуха</string>
     <string name="invalid_frequency">Неверное значение частоты</string>
     <string name="frequence">Частота</string>
@@ -31,6 +31,7 @@
     <string name="plus">+</string>
     <string name="plus1">+1</string>
     <string name="plus50">+50</string>
+    <string name="minus">-</string>
     <string name="minus1">-1</string>
     <string name="minus50">-50</string>
     <string name="deleteOneHarmonics">-1 гарм-ка</string>
@@ -49,6 +50,9 @@
     <string name="Hertz">Гц, </string>
     <string name="transition">transition</string>
     <string name="step">Шаг</string>
+    <string name="soundEffects">Звуковые эффекты</string>
+    <string name="amplitudeDynamic">Динамика амплитуды</string>
+    <string name="normalization">Нормализация амплитуды</string>
 
 
 </resources>

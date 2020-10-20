@@ -3,29 +3,40 @@ package com.example.musicapp.wave_tuner;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Selection;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
 
 import com.example.musicapp.R;
 import com.example.musicapp.buffer.ComplexWaveBuffer;
-import com.example.musicapp.main.MainPresenter;
-import com.example.musicapp.wave.ComplexWave;
-import com.example.musicapp.wave_tuner.WaveTunerView;
+import com.example.musicapp.buffer.WaveBuffer;
+import com.example.musicapp.model.WaveBufferBuilder;
+import com.example.musicapp.sound_effect.SoundEffectsStatus;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-public class WaveTunerActivity extends Activity implements WaveTunerView, View.OnClickListener {
+public class WaveTunerActivity extends Activity implements WaveTunerView, View.OnClickListener,
+        SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener {
 
     private ImageView imageViewPlay, imageViewStop;
     private WaveTunerPresenter waveTunerPresenter;
-    private EditText editText;
-    private Button buttonIncrease, buttonDecrease;
+    private EditText editTextStep, editTextFrequency;
+    private ImageView buttonIncrease, buttonDecrease;
+    private CheckBox checkBoxAmplitudeDynamic, checkBoxNormalization;
     private GraphView graph;
+    private SeekBar seekBar;
+    private int lastProgress = 0;
+    //private final SoundEffectsStatus soundEffectsStatus = SoundEffectsStatus.getInstance();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -36,43 +47,35 @@ public class WaveTunerActivity extends Activity implements WaveTunerView, View.O
         waveTunerPresenter.setCurrentWave(intent.getIntExtra("id", 0));
         imageViewPlay = findViewById(R.id.imageViewPlayWaveTuner);
         imageViewStop = findViewById(R.id.imageViewStopWaveTuner);
-        editText = findViewById(R.id.editTextStepWaveTuner);
         imageViewPlay.setVisibility(View.INVISIBLE);
         imageViewStop.setVisibility(View.VISIBLE);
-        buttonIncrease = findViewById(R.id.buttonIncreaseFrequency);
-        buttonDecrease = findViewById(R.id.buttonDecreaseFrequency);
+        editTextStep = findViewById(R.id.editTextStepWaveTuner);
+        editTextFrequency = findViewById(R.id.editTextFrequencyWaveTuner);
+        buttonIncrease = findViewById(R.id.imageViewIncreaseFrequencyWaveTuner);
+        buttonDecrease = findViewById(R.id.imageViewDecreaseFrequencyWaveTuner);
+        seekBar = findViewById(R.id.seekBarWaveTuner);
+        checkBoxAmplitudeDynamic = findViewById(R.id.checkBoxAmplitudeDynamicWaveTuner);
+        checkBoxNormalization = findViewById(R.id.checkBoxNormalizationWaveTuner);
+        initCheckBoxes();
+        checkBoxAmplitudeDynamic.setOnCheckedChangeListener(this);
+        checkBoxNormalization.setOnCheckedChangeListener(this);
+        seekBar.setOnSeekBarChangeListener(this);
         imageViewPlay.setOnClickListener(this);
         imageViewStop.setOnClickListener(this);
         buttonIncrease.setOnClickListener(this);
         buttonDecrease.setOnClickListener(this);
         graph = findViewById(R.id.graphWaveTuner);
         drawGraph();
-        /*checkboxHorizontalZoomScroll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    graph.getViewport().setScalable(true);
-                    graph.getViewport().setScalableY(true);
-                    graph.getViewport().setScrollable(true);
-                    graph.getViewport().setScrollableY(true);
-                }
-                else {
-                    graph.getViewport().setScalable(false);
-                    graph.getViewport().setScalableY(false);
-                    graph.getViewport().setScrollable(false);
-                    graph.getViewport().setScrollableY(false);
-                }
-            }
-        });*/
-        editText.setOnKeyListener(new View.OnKeyListener() {
+        initSeekBar();
+        editTextStep.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    String s = "-" + editText.getText().toString();
-                    buttonDecrease.setText(s);
-                    s = "+" + editText.getText().toString();
-                    buttonIncrease.setText(s);
+                    String s = "-" + editTextStep.getText().toString();
+                    //buttonDecrease.setText(s);
+                    s = "+" + editTextStep.getText().toString();
+                    //buttonIncrease.setText(s);
                     return true;
                 }
                 return false;
@@ -80,16 +83,42 @@ public class WaveTunerActivity extends Activity implements WaveTunerView, View.O
         });
     }
 
-    private void drawGraph(){
+    private void initCheckBoxes(){
+        checkBoxAmplitudeDynamic.setChecked(SoundEffectsStatus.amplitudeDynamic);
+        checkBoxNormalization.setChecked(SoundEffectsStatus.normalization);
+    }
+
+    private void initSeekBar() {
+        int progress = (int) waveTunerPresenter.getCurrentWave().getFrequency();
+        int newProgress = (int) Math.sqrt(progress * 3500);
+        int max = 3500;
+        seekBar.setMax(max);
+        seekBar.setProgress(newProgress);
+        setEditTextFrequencyValue(progress);
+    }
+
+    private void setEditTextFrequencyValue(int frequency) {
+        String text = String.valueOf(frequency);
+        editTextFrequency.setText(text);
+        int position = text.length();
+        Editable editable = editTextFrequency.getText();
+        Selection.setSelection(editable, position);
+    }
+
+    private void drawGraph() {
         graph.getViewport().setScrollable(true);
         graph.getViewport().setScrollableY(true);
-        ComplexWaveBuffer complexWaveBuffer = new ComplexWaveBuffer(waveTunerPresenter.getCurrentWave(),1000);
-        float[] buffer = complexWaveBuffer.createBufferSingleThread();
+        WaveBuffer waveBuffer = WaveBufferBuilder.getWaveBuffer(waveTunerPresenter.getCurrentWave(),1000);
+        float[] buffer = waveBuffer.createBuffer();
         DataPoint[] points = new DataPoint[buffer.length];
-        for(int i=0; i<buffer.length; i++)
-            points[i] = new DataPoint(i,buffer[i]);
+        for (int i = 0; i < buffer.length; i++)
+            points[i] = new DataPoint(i, buffer[i]);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(points);
         graph.addSeries(series);
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setScalableY(true);
+        graph.getViewport().setScrollable(true);
+        graph.getViewport().setScrollableY(true);
     }
 
     @Override
@@ -111,7 +140,55 @@ public class WaveTunerActivity extends Activity implements WaveTunerView, View.O
                 imageViewPlay.setClickable(true);
                 break;
             }
+            case R.id.imageViewDecreaseFrequencyWaveTuner: {
+                waveTunerPresenter.onButtonDecreaseClicked();
+                break;
+            }
+            case R.id.imageViewIncreaseFrequencyWaveTuner: {
+                waveTunerPresenter.onButtonIncreaseClicked();
+                break;
+            }
         }
+    }
+
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
+            case R.id.checkBoxAmplitudeDynamicWaveTuner: {
+                SoundEffectsStatus.amplitudeDynamic = isChecked;
+                waveTunerPresenter.enableAmplitudeDynamic(isChecked);
+                break;
+            }
+            case R.id.checkBoxNormalizationWaveTuner: {
+                SoundEffectsStatus.normalization = isChecked;
+                waveTunerPresenter.enableNormalization(isChecked);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+        if (lastProgress != progress) {
+            int newProgress = progress * progress / 3500;
+            seekBar.setProgress(progress);
+            lastProgress = progress;
+            setEditTextFrequencyValue(newProgress);
+        }
+
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        int progress = seekBar.getProgress();
+        int newProgress = progress * progress / 3500;
+        setEditTextFrequencyValue(newProgress);
     }
 
 }

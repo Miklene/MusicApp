@@ -1,6 +1,11 @@
 package com.example.musicapp.sound_effect;
 
-public class AmplitudeDynamic {
+import com.example.musicapp.buffer.WaveBuffer;
+import com.example.musicapp.wave.Wave;
+
+public class AmplitudeDynamic extends SoundEffectDecorator {
+
+    private WaveBuffer waveBuffer;
     private float[] dynamicCoefficient = {
             1.0f, 1.05f, 1.1f, 1.15f, 1.2f, 1.25f, 1.30f,
             1.30f, 1.25f, 1.2f, 1.15f, 1.1f, 1.05f, 1.0f,
@@ -9,8 +14,19 @@ public class AmplitudeDynamic {
     };
     private int counter;
 
-    public AmplitudeDynamic() {
+    public AmplitudeDynamic(WaveBuffer waveBuffer) {
+        this.waveBuffer = waveBuffer;
+    }
 
+    @Override
+    public float[] createBuffer() {
+        float[] buffer = waveBuffer.createBuffer();
+        counter = buffer.length/dynamicCoefficient.length+1;
+        for(int i = 0;i<buffer.length;i+=2){
+            buffer[i] = buffer[i] * getDynamicCoefficient(i);
+            buffer[i+1] = buffer[i];
+        }
+        return buffer;
     }
 
     public float[] applyEffect(float[] buffer){
@@ -27,5 +43,6 @@ public class AmplitudeDynamic {
         index = itemNumber / counter;
         return dynamicCoefficient[index];
     }
+
 
 }

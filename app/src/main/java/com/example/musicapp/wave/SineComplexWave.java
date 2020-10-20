@@ -1,9 +1,6 @@
 package com.example.musicapp.wave;
 
-import android.os.Parcel;
-
 import com.example.musicapp.R;
-import com.example.musicapp.WaveHarmonic;
 import com.example.musicapp.common.Type;
 
 public class SineComplexWave extends ComplexWave {

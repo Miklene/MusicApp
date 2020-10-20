@@ -1,12 +1,10 @@
 package com.example.musicapp.model;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.musicapp.common.Type;
-import com.example.musicapp.model.database.WaveDbHelper;
 import com.example.musicapp.wave.Wave;
 import com.example.musicapp.model.database.WaveDb.WaveTable;
 import java.util.ArrayList;
@@ -48,6 +46,10 @@ public class Waves implements WavesSubject {
         deleteWaveFromDatabase(id);
     }
 
+    public int getWavePosition(Wave wave){
+        return waveArrayList.indexOf(wave);
+    }
+
     public Wave getWave(int index){
         return waveArrayList.get(index);
     }
@@ -86,7 +88,7 @@ public class Waves implements WavesSubject {
 
     private static ContentValues getContentValues(Type type, float frequency, int harmonicsNumber){
         ContentValues contentValues= new ContentValues();
-        contentValues.put(WaveTable.Columns.TYPE,type.toString());
+        contentValues.put(WaveTable.Columns.TYPE, type.toString());
         contentValues.put(WaveTable.Columns.FREQUENCY,frequency);
         contentValues.put(WaveTable.Columns.HARMONICS_NUMBER, harmonicsNumber);
         return contentValues;

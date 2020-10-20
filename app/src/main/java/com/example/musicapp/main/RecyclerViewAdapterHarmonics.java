@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicapp.R;
-import com.example.musicapp.WaveHarmonic;
+import com.example.musicapp.Deprecated.WaveHarmonic;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,5 @@
 package com.example.musicapp.wave;
 
-import com.example.musicapp.R;
 import com.example.musicapp.common.Type;
 
 import java.util.ArrayList;

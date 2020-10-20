@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.database.CursorWrapper;
 
 import com.example.musicapp.common.Type;
-import com.example.musicapp.model.database.WaveDb;
 import com.example.musicapp.wave.Wave;
 import com.example.musicapp.model.database.WaveDb.WaveTable;
 import com.example.musicapp.wave.WaveFactory;
@@ -22,7 +21,7 @@ public class WaveCursorWrapper extends CursorWrapper {
         float frequency = getFloat(getColumnIndex(WaveTable.Columns.FREQUENCY));
         int harmonicsNumber = getInt(getColumnIndex(WaveTable.Columns.HARMONICS_NUMBER));
         if(stringType.equals(Type.SIN.toString()))
-            type =Type.SIN;
+            type = Type.SIN;
         if(stringType.equals(Type.VIOLIN.toString()))
             type = Type.VIOLIN;
         return WaveFactory.createWave(type, frequency, harmonicsNumber, tableId);

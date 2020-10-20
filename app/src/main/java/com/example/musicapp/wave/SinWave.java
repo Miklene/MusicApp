@@ -1,12 +1,6 @@
 package com.example.musicapp.wave;
 
 
-import com.example.musicapp.R;
-import com.example.musicapp.common.Type;
-
-import java.net.URL;
-import java.util.ArrayList;
-
 public class SinWave  {
     private float frequency;
     private float amplitude;

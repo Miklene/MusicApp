@@ -4,28 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.musicapp.Frequency;
 import com.example.musicapp.R;
-import com.example.musicapp.Wave;
-import com.example.musicapp.WaveCreator;
-import com.example.musicapp.WaveHarmonicCreator;
-import com.example.musicapp.WaveInstance;
+import com.example.musicapp.Deprecated.Wave;
 import com.example.musicapp.common.Type;
-import com.example.musicapp.frequencyObserver;
-import com.example.musicapp.main.MainActivity;
-
-import java.util.ArrayList;
 
 
 public class WaveDialogActivity extends Activity implements RadioGroup.OnCheckedChangeListener,
@@ -147,12 +136,12 @@ public class WaveDialogActivity extends Activity implements RadioGroup.OnChecked
                 break;
             case R.id.radioButtonSin:
                 type = Type.SIN;
-                editTextNumberOfHarmonic.setText("0");
-                editTextNumberOfHarmonic.setEnabled(false);
+                editTextNumberOfHarmonic.setText("");
+                /*editTextNumberOfHarmonic.setEnabled(false);
                 editTextNumberOfHarmonic.setFocusable(false);
                 editTextNumberOfHarmonic.setLongClickable(false);
-                editTextNumberOfHarmonic.setCursorVisible(false);
-                editTextNumberOfHarmonic.setBackgroundResource(R.drawable.border_rectangle_fill);
+                editTextNumberOfHarmonic.setCursorVisible(false);*/
+               // editTextNumberOfHarmonic.setBackgroundResource(R.drawable.border_rectangle_fill);
                 break;
         }
     }

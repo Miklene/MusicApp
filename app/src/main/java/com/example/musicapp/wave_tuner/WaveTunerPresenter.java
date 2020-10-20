@@ -2,6 +2,10 @@ package com.example.musicapp.wave_tuner;
 
 import android.content.Context;
 
+import com.example.musicapp.buffer.WaveBuffer;
+import com.example.musicapp.buffer.WaveBufferSingleThread;
+import com.example.musicapp.model.Settings;
+import com.example.musicapp.model.WaveBufferBuilder;
 import com.example.musicapp.model.WavePlayer;
 import com.example.musicapp.model.Waves;
 import com.example.musicapp.wave.Wave;
@@ -37,8 +41,24 @@ public class WaveTunerPresenter {
         stopWavePlayer();
     }
 
+    public void onButtonIncreaseClicked() {
+
+    }
+
+    public void onButtonDecreaseClicked() {
+
+    }
+
+    public void enableAmplitudeDynamic(boolean isEnable){
+
+    }
+
+    public void enableNormalization(boolean isEnable){
+
+    }
+
     private void startWavePlayer() {
-        wavePlayer.playWave(currentWave, 1000);
+        wavePlayer.playWave(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
     }
 
     private void stopWavePlayer() {

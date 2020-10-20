@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 
 public class WaveDbHelper extends SQLiteOpenHelper {
 
-    private static final int VERSION =1;
+    private static final int VERSION = 1;
     private static final String DATABASE_NAME = "waveBase.db";
 
     public WaveDbHelper(@Nullable Context context) {

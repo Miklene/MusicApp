@@ -12,6 +12,7 @@ import com.example.musicapp.wave.Wave;
 public class WaveBufferBuilder {
 
     private static WaveBuffer waveBuffer;
+
     public static WaveBuffer getWaveBuffer(Wave wave, int duration){
         if(Settings.currentWaveBuffer.equals(TypeOfBuffer.SINGLE))
             waveBuffer = new WaveBufferSingleThread(wave, duration);

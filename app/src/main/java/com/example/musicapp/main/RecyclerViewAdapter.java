@@ -118,6 +118,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 context.startActivity(intent);
                                 break;
                             }
+                            case R.id.menu_item_showShortGraph:{
+                                Intent intent = new Intent(context, GraphDialogActivity.class);
+                                float[] buffer = WaveBufferBuilder.getWaveBuffer(waves.get(i), Settings.duration).createBuffer();
+                                short[] dataShort = new short[buffer.length];
+                                for(int i = 0; i<buffer.length;i++)
+                                    dataShort[i] = (short)(buffer[i]*0x7FFF);
+                                intent.putExtra("shortbuf",
+                                        dataShort);
+                                context.startActivity(intent);
+                                break;
+                            }
                             case R.id.menu_item_delete: {
                                 mainPresenter.deleteWave(i);
                                 //waves.remove(i);

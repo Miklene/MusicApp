@@ -6,6 +6,9 @@
     <item
         android:id="@+id/menu_item_delete"
         android:title="@string/delete" />
+    <item
+        android:id="@+id/menu_item_createWav"
+        android:title="@string/createWav" />
    <!-- <item
         android:id="@+id/menu_item_addHarmonic"
         android:title="@string/addHarmonic" />-->
@@ -13,6 +16,7 @@
         android:id="@+id/menu_item_showGraph"
         android:title="@string/showGraph" />
     <item
-        android:id="@+id/menu_item_createWav"
-        android:title="@string/createWav" />
+        android:id="@+id/menu_item_showShortGraph"
+        android:title="@string/showShortGraph" />
+
 </menu>

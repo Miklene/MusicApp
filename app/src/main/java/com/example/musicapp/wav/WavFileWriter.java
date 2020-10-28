@@ -8,8 +8,8 @@ import java.nio.ByteBuffer;
 
 public class WavFileWriter {
 
-    private WavFile wavFile;
-    private File file;
+    private final WavFile wavFile;
+    private final File file;
     private FileOutputStream writer;
 
     public WavFileWriter(WavFile wavFile, File file) {
@@ -46,8 +46,11 @@ public class WavFileWriter {
 
     private void writeData() throws IOException {
         float[] data = wavFile.getData();
+        short[] dataShort = new short[data.length];
+        for(int i = 0; i<data.length;i++)
+            dataShort[i] = (short)(data[i]*0x7FFF);
         for (int i = 0; i < data.length; i++) {
-            writer.write(floatToByte(data[i], true));
+            writer.write(shortToByte(dataShort[i], true));
         }
     }
 

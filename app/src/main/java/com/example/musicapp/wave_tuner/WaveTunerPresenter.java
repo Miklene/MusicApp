@@ -41,20 +41,29 @@ public class WaveTunerPresenter {
         stopWavePlayer();
     }
 
-    public void onButtonIncreaseClicked() {
 
+    public void onButtonIncreaseClicked(float change) {
+        frequencyChanged(currentWave.getFrequency()+change);
     }
 
-    public void onButtonDecreaseClicked() {
+    public void onButtonDecreaseClicked(float change) {
+        frequencyChanged(currentWave.getFrequency()-change);
+    }
 
+    public void frequencyChanged(float newFrequency){
+        currentWave.setFrequency(newFrequency);
+        waveTunerView.drawGraph();
+        //wavePlayer.updateWaveBuffer(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
     }
 
     public void enableAmplitudeDynamic(boolean isEnable){
-
+        wavePlayer.updateWaveBuffer(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
+        waveTunerView.drawGraph();
     }
 
     public void enableNormalization(boolean isEnable){
-
+        wavePlayer.updateWaveBuffer(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
+        waveTunerView.drawGraph();
     }
 
     private void startWavePlayer() {

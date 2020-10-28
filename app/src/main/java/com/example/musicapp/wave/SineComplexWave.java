@@ -18,6 +18,7 @@ public class SineComplexWave extends ComplexWave {
 
     @Override
     void createWaveHarmonics(float frequency, int harmonicsNumber) {
+        waveHarmonics.clear();
         for(int i =0;i<harmonicsNumber; i++)
             waveHarmonics.add(new SinWave(frequency*(i+2), 100, 0));
     }

@@ -69,6 +69,8 @@ public abstract class ComplexWave implements Wave{
 
     @Override
     public void setFrequency(float frequency) {
-        mainTone.setFrequency(frequency);
+        //mainTone.setFrequency(frequency);
+        createMainTone(frequency);
+        createWaveHarmonics(frequency, getHarmonicsNumber());
     }
 }

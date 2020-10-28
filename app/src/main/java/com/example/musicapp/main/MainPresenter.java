@@ -4,10 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import com.example.musicapp.buffer.ComplexWaveBuffer;
 import com.example.musicapp.buffer.WaveBuffer;
-import com.example.musicapp.buffer.WaveBufferSingleThread;
-import com.example.musicapp.common.TypeOfBuffer;
 import com.example.musicapp.model.Settings;
 import com.example.musicapp.model.WaveBufferBuilder;
 import com.example.musicapp.model.database.WaveDbHelper;
@@ -16,9 +13,8 @@ import com.example.musicapp.model.Waves;
 import com.example.musicapp.wav.WavFile;
 import com.example.musicapp.wav.WavFileWriter;
 import com.example.musicapp.wav.WavHeader;
-import com.example.musicapp.wav.WavHeader32Bit;
+import com.example.musicapp.wav.WavHeader16Bit;
 import com.example.musicapp.wave.Wave;
-import com.example.musicapp.wave.WaveFactory;
 import com.example.musicapp.wave_tuner.WaveTunerView;
 
 import java.io.File;
@@ -125,7 +121,7 @@ public class MainPresenter {
             }
         }
         float[] buffer = waveBuffer.createBuffer();
-        WavHeader wavHeader = new WavHeader32Bit((short) 2, buffer.length);
+        WavHeader wavHeader = new WavHeader16Bit((short) 2, buffer.length);
         WavFile wavFile = new WavFile(wavHeader, buffer);
         //FileOutputStream writer = new FileOutputStream(myFile);
         WavFileWriter wavFileWriter = new WavFileWriter(wavFile, myFile);

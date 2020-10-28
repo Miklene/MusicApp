@@ -65,6 +65,10 @@ public class WavePlayer implements RecordParameters {
         thread.start();
     }
 
+    public void updateWaveBuffer(WaveBuffer waveBuffer) {
+        this.waveBuffer = waveBuffer;
+    }
+
     public void stopWavePlayer() {
         interrupt(thread);
 

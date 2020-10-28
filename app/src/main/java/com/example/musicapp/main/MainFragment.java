@@ -41,7 +41,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             channels = "Моно";
         textViewAllParameters.setText(StringFormer.formString(
                 String.valueOf(bundle.getFloat("f")), "Гц, ",
-                 String.valueOf(bundle.getInt("hn")), ", " ,channels, ", ", "32-bit"));
+                String.valueOf(bundle.getInt("hn")), ", ", channels, ", ", "32-bit"));
        /* textFrequency = v.findViewById(R.id.textFrequencyFragment);
         textStereo = v.findViewById(R.id.textStereoFragment);
         textViewNumberOfHarmonics = v.findViewById(R.id.textViewNumberOfHarmonicsFragment);
@@ -64,10 +64,10 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         return v;
     }
 
-    public void displayNewWave(float frequency, int harmonicsNumber){
+    public void displayNewWave(float frequency, int harmonicsNumber) {
         textViewAllParameters.setText(StringFormer.formString(
                 String.valueOf(frequency), "Гц, ",
-                String.valueOf(harmonicsNumber), ", " ,"Стерео", ", ", "32-bit"));
+                String.valueOf(harmonicsNumber), ", ", "Стерео", ", ", "32-bit"));
         imageViewPlay.setClickable(false);
         imageViewPlay.setVisibility(View.INVISIBLE);
         imageViewStop.setVisibility(View.VISIBLE);

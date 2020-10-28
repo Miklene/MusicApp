@@ -36,6 +36,7 @@ public class WaveTunerActivity extends Activity implements WaveTunerView, View.O
     private GraphView graph;
     private SeekBar seekBar;
     private int lastProgress = 0;
+    private float step=1;
     //private final SoundEffectsStatus soundEffectsStatus = SoundEffectsStatus.getInstance();
 
     @Override
@@ -67,14 +68,16 @@ public class WaveTunerActivity extends Activity implements WaveTunerView, View.O
         graph = findViewById(R.id.graphWaveTuner);
         drawGraph();
         initSeekBar();
+        editTextStep.setText(String.valueOf(step));
         editTextStep.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_DOWN &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    String s = "-" + editTextStep.getText().toString();
+                    step =  Float.parseFloat(editTextStep.getText().toString());
+                    //String s = "-" + editTextStep.getText().toString();
                     //buttonDecrease.setText(s);
-                    s = "+" + editTextStep.getText().toString();
+                    //s = "+" + editTextStep.getText().toString();
                     //buttonIncrease.setText(s);
                     return true;
                 }
@@ -105,7 +108,9 @@ public class WaveTunerActivity extends Activity implements WaveTunerView, View.O
         Selection.setSelection(editable, position);
     }
 
-    private void drawGraph() {
+    @Override
+    public void drawGraph() {
+        graph.removeAllSeries();
         graph.getViewport().setScrollable(true);
         graph.getViewport().setScrollableY(true);
         WaveBuffer waveBuffer = WaveBufferBuilder.getWaveBuffer(waveTunerPresenter.getCurrentWave(),1000);
@@ -141,15 +146,20 @@ public class WaveTunerActivity extends Activity implements WaveTunerView, View.O
                 break;
             }
             case R.id.imageViewDecreaseFrequencyWaveTuner: {
-                waveTunerPresenter.onButtonDecreaseClicked();
+                waveTunerPresenter.onButtonDecreaseClicked(step);
+                float curFrequency = Float.parseFloat(editTextFrequency.getText().toString());
+                editTextFrequency.setText(String.valueOf(curFrequency - step));
                 break;
             }
             case R.id.imageViewIncreaseFrequencyWaveTuner: {
-                waveTunerPresenter.onButtonIncreaseClicked();
+                waveTunerPresenter.onButtonIncreaseClicked(step);
+                float curFrequency = Float.parseFloat(editTextFrequency.getText().toString());
+                editTextFrequency.setText(String.valueOf(curFrequency + step));
                 break;
             }
         }
     }
+
 
 
     @Override
@@ -175,6 +185,7 @@ public class WaveTunerActivity extends Activity implements WaveTunerView, View.O
             seekBar.setProgress(progress);
             lastProgress = progress;
             setEditTextFrequencyValue(newProgress);
+            waveTunerPresenter.frequencyChanged(newProgress);
         }
 
     }

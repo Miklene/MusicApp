@@ -3,11 +3,13 @@ package com.example.musicapp.buffer;
 import com.example.musicapp.wave.Wave;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Objects;
+import java.util.Queue;
 
 public class WaveBufferSingleThread extends WaveBuffer {
 
     private Wave wave;
-    private ReadyBuffers readyBuffers;
     private ArrayList<SinWaveBuffer> sinWaveBuffers = new ArrayList<>();
     private int duration;
 
@@ -19,16 +21,16 @@ public class WaveBufferSingleThread extends WaveBuffer {
 
     @Override
     public float[] createBuffer() {
-        float[] buffer;
         int harmonicsNumber = wave.getWaveHarmonics().size();
-        readyBuffers = new ReadyBuffers(harmonicsNumber);
+        Queue<float[]> readyBuffers = new LinkedList<>();
+        float[] buffer;
         for (int i = 0; i < sinWaveBuffers.size(); i++) {
-            readyBuffers.putBuffer(sinWaveBuffers.get(i).makeSinBuffer());
+            readyBuffers.offer(sinWaveBuffers.get(i).makeSinBuffer());
         }
         for (int i = 0; i < harmonicsNumber; i++) {
-            readyBuffers.putBuffer(addBuffer(readyBuffers.getBuffer(), readyBuffers.getBuffer()));
+            readyBuffers.add(addBuffer((readyBuffers.poll()), readyBuffers.poll()));
         }
-        buffer = readyBuffers.getBuffer();
+        buffer = readyBuffers.poll();
         return buffer;
     }
 
@@ -38,6 +40,27 @@ public class WaveBufferSingleThread extends WaveBuffer {
             buf1[i] += buf2[i];
         return buf1;
     }
+    /*@Override
+    public short[] createShortBuffer() {
+        int harmonicsNumber = wave.getWaveHarmonics().size();
+        Queue<short[]> readyBuffers = new LinkedList<>();
+        short[] buffer;
+        for (int i = 0; i < sinWaveBuffers.size(); i++) {
+            readyBuffers.offer(sinWaveBuffers.get(i).makeShortSinBuffer());
+        }
+        for (int i = 0; i < harmonicsNumber; i++) {
+            readyBuffers.add(addBuffer((readyBuffers.poll()), readyBuffers.poll()));
+        }
+        buffer = readyBuffers.poll();
+        return buffer;
+    }
+
+    private short[] addBuffer(short[] buf1, short[] buf2) {
+        int duration = buf1.length;
+        for (int i = 0; i < duration; i++)
+            buf1[i] += buf2[i];
+        return buf1;
+    }*/
 
     private void writeSinWaveBuffers(){
         int harmonicsNumber = wave.getWaveHarmonics().size();

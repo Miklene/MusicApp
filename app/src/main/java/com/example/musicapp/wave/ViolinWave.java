@@ -20,6 +20,7 @@ public class ViolinWave extends ComplexWave implements ViolinCoefficients {
     @Override
     void createWaveHarmonics(float frequency, int harmonicsNumber) {
         double[] initialPhaseCoefficients = ViolinCoefficients.initialPhaseCoefficients;
+        waveHarmonics.clear();
         for(int i =0;i<harmonicsNumber; i++)
             waveHarmonics.add(new SinWave(frequency*(i+2), amplitudeRatios[i+1], initialPhaseCoefficients[i+1]));
     }

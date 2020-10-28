@@ -8,4 +8,6 @@ public abstract class WaveBuffer {
     }
 
     public abstract float[] createBuffer();
+
+    //public abstract short[] createShortBuffer();
 }

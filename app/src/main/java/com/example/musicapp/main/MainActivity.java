@@ -58,6 +58,9 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         mainPresenter.attachRecyclerViewAdapter(adapter);
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(this);
+        TestAlgorithmOfGenerationBuffer testAlgorithmOfGenerationBuffer = new TestAlgorithmOfGenerationBuffer();
+        testAlgorithmOfGenerationBuffer.speedTestByMeMulti();
+        testAlgorithmOfGenerationBuffer.speedTestByMeSingle();
        /* File myFile = new File(this.getExternalFilesDir(null), "wave.wav");
         if (!myFile.exists()) {
             try {

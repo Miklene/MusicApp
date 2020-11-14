@@ -27,7 +27,7 @@ public class WavePlayer implements RecordParameters {
     }
 
     public void playWave(WaveBuffer waveBuffer/*Wave wave, int duration*/) {
-        if(thread != null)
+        if (thread != null)
             return;
         //complexWaveBuffer = new ComplexWaveBuffer(wave,duration);
         this.waveBuffer = waveBuffer;
@@ -88,6 +88,14 @@ public class WavePlayer implements RecordParameters {
         }
         thread = null;
         // myPhase=0;
+    }
+
+    public boolean isPlayed() {
+        try {
+            return thread.isAlive();
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
     private static void interrupt(Thread thread) {

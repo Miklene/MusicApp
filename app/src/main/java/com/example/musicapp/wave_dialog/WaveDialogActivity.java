@@ -21,7 +21,7 @@ public class WaveDialogActivity extends Activity implements RadioGroup.OnChecked
         WaveDialogView, View.OnClickListener {
 
     private EditText editTextFrequency, editTextNumberOfHarmonic;
-    Button positiveButton,negativeButton;
+    Button positiveButton, negativeButton;
     private Type type;
     private WaveDialogPresenter waveDialogPresenter;
 
@@ -33,6 +33,7 @@ public class WaveDialogActivity extends Activity implements RadioGroup.OnChecked
         waveDialogPresenter = new WaveDialogPresenter(this, this);
         RadioButton radioButtonViolin = findViewById(R.id.radioButtonViolin);
         RadioButton radioButtonSin = findViewById(R.id.radioButtonSin);
+        RadioButton radioButtonOrgan = findViewById(R.id.radioButtonOrgan);
         RadioGroup radioGroupType = findViewById(R.id.radioGroupType);
         radioGroupType.setOnCheckedChangeListener(this);
         positiveButton = findViewById(R.id.positiveButton);
@@ -44,8 +45,16 @@ public class WaveDialogActivity extends Activity implements RadioGroup.OnChecked
             wave = (Wave) arguments.get("wave");
             assert wave != null;
             type = wave.getType();
-            if (type.equals(Type.SAW)) {
+            if (type.equals(Type.VIOLIN)) {
                 radioButtonViolin.setChecked(true);
+                editTextNumberOfHarmonic.setEnabled(true);
+                editTextNumberOfHarmonic.setFocusable(true);
+                editTextNumberOfHarmonic.setLongClickable(true);
+                editTextNumberOfHarmonic.setCursorVisible(true);
+                editTextNumberOfHarmonic.setFocusableInTouchMode(true);
+                editTextNumberOfHarmonic.requestFocus();
+            } else if (type.equals(Type.ORGAN)) {
+                radioButtonOrgan.setChecked(true);
                 editTextNumberOfHarmonic.setEnabled(true);
                 editTextNumberOfHarmonic.setFocusable(true);
                 editTextNumberOfHarmonic.setLongClickable(true);
@@ -141,7 +150,18 @@ public class WaveDialogActivity extends Activity implements RadioGroup.OnChecked
                 editTextNumberOfHarmonic.setFocusable(false);
                 editTextNumberOfHarmonic.setLongClickable(false);
                 editTextNumberOfHarmonic.setCursorVisible(false);*/
-               // editTextNumberOfHarmonic.setBackgroundResource(R.drawable.border_rectangle_fill);
+                // editTextNumberOfHarmonic.setBackgroundResource(R.drawable.border_rectangle_fill);
+                break;
+            case R.id.radioButtonOrgan:
+                type = Type.ORGAN;
+                editTextNumberOfHarmonic.setText("");
+                editTextNumberOfHarmonic.setEnabled(true);
+                editTextNumberOfHarmonic.setFocusable(true);
+                editTextNumberOfHarmonic.setLongClickable(true);
+                editTextNumberOfHarmonic.setCursorVisible(true);
+                editTextNumberOfHarmonic.setFocusableInTouchMode(true);
+                editTextNumberOfHarmonic.requestFocus();
+                editTextNumberOfHarmonic.setBackgroundResource(R.drawable.border_rectangle);
                 break;
         }
     }

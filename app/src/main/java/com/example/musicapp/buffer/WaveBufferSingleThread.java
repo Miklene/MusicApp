@@ -40,27 +40,6 @@ public class WaveBufferSingleThread extends WaveBuffer {
             buf1[i] += buf2[i];
         return buf1;
     }
-    /*@Override
-    public short[] createShortBuffer() {
-        int harmonicsNumber = wave.getWaveHarmonics().size();
-        Queue<short[]> readyBuffers = new LinkedList<>();
-        short[] buffer;
-        for (int i = 0; i < sinWaveBuffers.size(); i++) {
-            readyBuffers.offer(sinWaveBuffers.get(i).makeShortSinBuffer());
-        }
-        for (int i = 0; i < harmonicsNumber; i++) {
-            readyBuffers.add(addBuffer((readyBuffers.poll()), readyBuffers.poll()));
-        }
-        buffer = readyBuffers.poll();
-        return buffer;
-    }
-
-    private short[] addBuffer(short[] buf1, short[] buf2) {
-        int duration = buf1.length;
-        for (int i = 0; i < duration; i++)
-            buf1[i] += buf2[i];
-        return buf1;
-    }*/
 
     private void writeSinWaveBuffers(){
         int harmonicsNumber = wave.getWaveHarmonics().size();

@@ -8,6 +8,7 @@ import com.example.musicapp.model.Settings;
 import com.example.musicapp.model.WaveBufferBuilder;
 import com.example.musicapp.model.WavePlayer;
 import com.example.musicapp.model.Waves;
+import com.example.musicapp.sound_effect.SoundEffectsStatus;
 import com.example.musicapp.wave.Wave;
 
 public class WaveTunerPresenter {
@@ -53,17 +54,29 @@ public class WaveTunerPresenter {
     public void frequencyChanged(float newFrequency){
         currentWave.setFrequency(newFrequency);
         waveTunerView.drawGraph();
-        //wavePlayer.updateWaveBuffer(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
+        wavePlayer.updateWaveBuffer(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
     }
 
     public void enableAmplitudeDynamic(boolean isEnable){
+        SoundEffectsStatus.amplitudeDynamic = isEnable;
+        wavePlayer.updateWaveBuffer(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
+        waveTunerView.drawGraph();
+    }
+
+    public void enableFrequencyDynamic(boolean isEnable){
+        SoundEffectsStatus.frequencyDynamic = isEnable;
         wavePlayer.updateWaveBuffer(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
         waveTunerView.drawGraph();
     }
 
     public void enableNormalization(boolean isEnable){
+        SoundEffectsStatus.normalization = isEnable;
         wavePlayer.updateWaveBuffer(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
         waveTunerView.drawGraph();
+    }
+
+    public boolean getWavePlayerInstance(){
+        return wavePlayer.isPlayed();
     }
 
     private void startWavePlayer() {
@@ -74,6 +87,8 @@ public class WaveTunerPresenter {
         wavePlayer.stopWavePlayer();
         //wavePlayer = null;
     }
+
+
 
 
 }

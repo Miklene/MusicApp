@@ -1,6 +1,5 @@
 package com.example.musicapp.buffer;
 
-import com.example.musicapp.sound_effect.AmplitudeDynamic;
 import com.example.musicapp.wave.Wave;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class ComplexWaveBuffer {
             readyBuffers.putBuffer(addBuffer(readyBuffers.getBuffer(), readyBuffers.getBuffer()));
         }
         buffer = readyBuffers.getBuffer();
-        //AmplitudeDynamic amplitudeDynamic = new AmplitudeDynamic();
+        //AmplitudeDynamics amplitudeDynamic = new AmplitudeDynamics();
         //amplitudeDynamic.applyEffect(buffer);
         return correctAmplitude(buffer);
     }

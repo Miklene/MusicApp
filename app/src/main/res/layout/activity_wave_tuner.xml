@@ -14,7 +14,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <ImageView
             android:id="@+id/imageViewPlayWaveTuner"
@@ -82,6 +84,8 @@
             android:background="@drawable/border_rectangle"
             android:ems="10"
             android:inputType="numberDecimal"
+            android:nextFocusLeft="@id/editTextFrequencyWaveTuner"
+            android:nextFocusUp="@id/editTextFrequencyWaveTuner"
             android:paddingStart="10dp"
             android:paddingTop="5dp"
             android:paddingEnd="10dp"
@@ -103,7 +107,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
             android:layout_below="@id/seekBarWaveTuner">
 
             <RelativeLayout
@@ -114,8 +119,8 @@
                     android:id="@+id/textViewStep"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                   android:layout_alignParentTop="true"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
                     android:layout_margin="5dp"
                     android:text="@string/step"
                     android:textSize="16sp" />
@@ -134,12 +139,19 @@
                     android:paddingTop="5dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="5dp" />
-
+                <com.example.musicapp.wave_tuner.CustomExpandableListView
+                    android:id="@+id/expandableListViewWaveTuner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/editTextStepWaveTuner"
+                    android:divider="@android:color/darker_gray"
+                    android:dividerHeight="1dp"
+                    android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
                 <TextView
                     android:id="@+id/textViewSoundEffectsWaveTuner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/editTextStepWaveTuner"
+                    android:layout_below="@id/expandableListViewWaveTuner"
                     android:layout_alignParentStart="true"
                     android:layout_margin="5dp"
                     android:text="@string/soundEffects"
@@ -154,12 +166,47 @@
                     android:text="@string/amplitudeDynamic" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxNormalizationWaveTuner"
+                    android:id="@+id/checkBoxFrequencyDynamicWaveTuner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/checkBoxAmplitudeDynamicWaveTuner"
                     android:buttonTint="@color/colorPrimary"
+                    android:text="@string/frequencyDynamic" />
+
+                <CheckBox
+                    android:id="@+id/checkBoxNormalizationWaveTuner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/checkBoxFrequencyDynamicWaveTuner"
+                    android:buttonTint="@color/colorPrimary"
                     android:text="@string/normalization" />
+
+                <TextView
+                    android:id="@+id/textViewSettingsADWaveTuner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/checkBoxNormalizationWaveTuner"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="5dp"
+                    android:text="@string/settingsAD"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/textViewAmplitudePercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewSettingsADWaveTuner"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="5dp"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/textViewFrequencyPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewAmplitudePercent"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="5dp"
+                    android:textSize="16sp" />
+
             </RelativeLayout>
         </ScrollView>
     </RelativeLayout>

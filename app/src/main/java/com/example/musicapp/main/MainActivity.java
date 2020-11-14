@@ -3,10 +3,14 @@ package com.example.musicapp.main;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -79,6 +83,22 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         //speedTest();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(MainActivity.this);
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.main_menu_item_settings: {
+                
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public static short floatToShort(float x) {
         if (x < Short.MIN_VALUE) {

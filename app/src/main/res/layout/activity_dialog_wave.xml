@@ -31,12 +31,21 @@
             android:textSize="16sp" />
 
         <RadioButton
+            android:id="@+id/radioButtonOrgan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/organ"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <RadioButton
             android:id="@+id/radioButtonSin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sin"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />
+
     </RadioGroup>
 
     <TextView
@@ -49,7 +58,6 @@
         android:textSize="16sp" />
 
     <EditText
-        android:hint="@string/enterFrequency"
         android:id="@+id/editTextFrequency"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,11 +66,12 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/border_rectangle"
         android:ems="10"
+        android:hint="@string/enterFrequency"
         android:inputType="numberDecimal"
         android:paddingStart="10dp"
         android:paddingTop="5dp"
         android:paddingEnd="10dp"
-        android:paddingBottom="5dp"/>
+        android:paddingBottom="5dp" />
 
     <TextView
         android:id="@+id/textViewNumberOfHarmonic"
@@ -74,7 +83,6 @@
         android:textSize="16sp" />
 
     <EditText
-        android:hint="@string/enterHarmonicsNumber"
         android:id="@+id/editTextNumberOfHarmonic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,6 +91,7 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/border_rectangle"
         android:ems="10"
+        android:hint="@string/enterHarmonicsNumber"
         android:inputType="numberDecimal"
         android:paddingStart="10dp"
         android:paddingTop="5dp"

@@ -24,8 +24,8 @@ public class Normalization extends SoundEffectDecorator {
         float max;
         max = buffer[0];
         for (int i = 0; i < buffer.length; i++) {
-            if (max < buffer[i])
-                max = buffer[i];
+            if (max < Math.abs(buffer[i]))
+                max = Math.abs(buffer[i]);
         }
         return max;
     }

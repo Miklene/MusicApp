@@ -24,6 +24,8 @@ public class WaveCursorWrapper extends CursorWrapper {
             type = Type.SIN;
         if(stringType.equals(Type.VIOLIN.toString()))
             type = Type.VIOLIN;
+        if(stringType.equals(Type.ORGAN.toString()))
+            type = Type.ORGAN;
         return WaveFactory.createWave(type, frequency, harmonicsNumber, tableId);
     }
 }

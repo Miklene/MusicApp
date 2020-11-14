@@ -19,6 +19,7 @@
     <string name="sin">Синус</string>
     <string name="saw">Пила</string>
     <string name="violin">Скрипка</string>
+    <string name="organ">Орган</string>
     <string name="numberOfHarmonic">Кол-во гармоник</string>
     <string name="enterHarmonicsNumber">Введите кол-во гармоник</string>
     <string name="stop">Стоп</string>
@@ -53,7 +54,10 @@
     <string name="step">Шаг</string>
     <string name="soundEffects">Звуковые эффекты</string>
     <string name="amplitudeDynamic">Динамика амплитуды</string>
+    <string name="frequencyDynamic">Динамика частоты</string>
     <string name="normalization">Нормализация амплитуды</string>
+    <string name="settingsAD">Настройки динамики амплитуды</string>
+    <string name="settings">Настройки</string>
 
 
 </resources>

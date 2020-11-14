@@ -77,7 +77,7 @@ public class Waves implements WavesSubject {
     @Override
     public void notifyObservers() {
         for(int i = 0; i <observers.size(); i++) {
-            WavesObserver observer =observers.get(i);
+            WavesObserver observer = observers.get(i);
             observer.update(waveArrayList.get(waveArrayList.size() - 1));
         }
     }

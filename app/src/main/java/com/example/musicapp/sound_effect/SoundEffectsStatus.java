@@ -2,9 +2,11 @@ package com.example.musicapp.sound_effect;
 
 public class SoundEffectsStatus {
 
-    public static boolean amplitudeDynamic = false;
+    public static boolean amplitudeDynamic = true;
     public static boolean normalization = true;
     public static boolean reverberation;
+    public static boolean stereo = true;
+    public static boolean frequencyDynamic = false;
 
     /*private static SoundEffectsStatus instance;
 

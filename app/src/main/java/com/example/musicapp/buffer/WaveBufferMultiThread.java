@@ -60,11 +60,6 @@ public class WaveBufferMultiThread extends WaveBuffer {
         return buffer;
     }
 
-   /*@Override
-   / public short[] createShortBuffer() {
-        return new short[0];
-    }*/
-
     private synchronized void tryAddBuffer() {
         if (readyBuffers.getSize() > 1)
             readyBuffers.putBuffer(addBuffer(readyBuffers.getBuffer(), readyBuffers.getBuffer()));

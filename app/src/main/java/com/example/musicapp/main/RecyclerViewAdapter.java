@@ -19,8 +19,6 @@ import com.example.musicapp.Deprecated.Frequency;
 import com.example.musicapp.R;
 import com.example.musicapp.Deprecated.Reverberation;
 import com.example.musicapp.Deprecated.SinWaveHarmonic;
-import com.example.musicapp.buffer.WaveBuffer;
-import com.example.musicapp.buffer.WaveBufferSingleThread;
 import com.example.musicapp.common.GraphDialogActivity;
 import com.example.musicapp.common.StringFormer;
 import com.example.musicapp.Deprecated.ToneGenerator;
@@ -28,9 +26,6 @@ import com.example.musicapp.model.Settings;
 import com.example.musicapp.model.WaveBufferBuilder;
 import com.example.musicapp.model.Waves;
 import com.example.musicapp.model.WavesObserver;
-import com.example.musicapp.sound_effect.AmplitudeDynamic;
-import com.example.musicapp.sound_effect.Normalization;
-import com.example.musicapp.sound_effect.SoundEffectsStatus;
 import com.example.musicapp.wave_dialog.WaveDialogActivity;
 import com.example.musicapp.Deprecated.WaveHarmonic;
 import com.example.musicapp.Deprecated.WaveInstance;
@@ -114,13 +109,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             case R.id.menu_item_showGraph:{
                                 Intent intent = new Intent(context, GraphDialogActivity.class);
                                 intent.putExtra("buffer",
-                                        WaveBufferBuilder.getWaveBuffer(waves.get(i), Settings.duration).createBuffer());
+                                        WaveBufferBuilder.getWaveBufferGraph(waves.get(i), Settings.duration).createBuffer());
                                 context.startActivity(intent);
                                 break;
                             }
                             case R.id.menu_item_showShortGraph:{
                                 Intent intent = new Intent(context, GraphDialogActivity.class);
-                                float[] buffer = WaveBufferBuilder.getWaveBuffer(waves.get(i), Settings.duration).createBuffer();
+                                float[] buffer = WaveBufferBuilder.getWaveBufferGraph(waves.get(i), Settings.duration).createBuffer();
                                 short[] dataShort = new short[buffer.length];
                                 for(int i = 0; i<buffer.length;i++)
                                     dataShort[i] = (short)(buffer[i]*0x7FFF);

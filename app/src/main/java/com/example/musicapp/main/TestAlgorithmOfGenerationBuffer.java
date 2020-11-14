@@ -57,7 +57,7 @@ public class TestAlgorithmOfGenerationBuffer {
             finish = System.nanoTime();
 
             singleResult = finish - start;
-            result = "Single thread " + testedDuration[j] * 2 + ", testedDuration[duration: " + testedDuration[j] + ". №: " + j + "]: " + singleResult / 1000;
+            result = "Single thread " + testedDuration[j] * 2 + ", testedDuration[duration: " + testedDuration[j] + ". №:" + j + "]: " + singleResult / 1000;
             System.out.println(result);
             //result = String.valueOf(singleResult / 1000);
             //System.out.println(result);
@@ -88,7 +88,7 @@ public class TestAlgorithmOfGenerationBuffer {
             finish = System.nanoTime();
 
             multiResult = finish - start;
-            System.out.println("Multi thread " + ", testedDuration[duration: " + testedDuration[j] * 2 + ". №: " + j + "]: " + multiResult / 1000);
+            System.out.println("Multi thread " + ", testedDuration[duration: " + testedDuration[j] * 2 + ". №:" + j + "]: " + multiResult / 1000);
             //result = String.valueOf(singleResult / 1000 - multiResult / 1000);
             //result = String.valueOf(multiResult / 1000);
             //toast = Toast.makeText(this, result, Toast.LENGTH_LONG);

@@ -7,4 +7,5 @@ public class Settings {
 
     public static TypeOfBuffer currentWaveBuffer = TypeOfBuffer.SINGLE;
     public static  int duration = 1000;
+    public static boolean frequencyChanged = false;
 }

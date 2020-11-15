@@ -1,6 +1,8 @@
 package com.example.musicapp.buffer;
 
 
+import android.util.Log;
+
 import com.example.musicapp.common.RecordParameters;
 import com.example.musicapp.sound_effect.amplitude.AmplitudeBehavior;
 import com.example.musicapp.sound_effect.amplitude.DynamicAmplitude;
@@ -34,6 +36,7 @@ public class SinWaveBuffer implements Callable, RecordParameters {
             amplitude = new DynamicAmplitude(sinWave);
         else
             amplitude = new StaticAmplitude(sinWave);
+        Log.i("SinWave", String.valueOf(sinWave.getFrequency()));
     }
 
     public float[] makeSinBuffer() {

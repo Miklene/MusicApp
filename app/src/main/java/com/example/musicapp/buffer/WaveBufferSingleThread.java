@@ -1,5 +1,6 @@
 package com.example.musicapp.buffer;
 
+import com.example.musicapp.model.Settings;
 import com.example.musicapp.wave.Wave;
 
 import java.util.ArrayList;
@@ -21,6 +22,10 @@ public class WaveBufferSingleThread extends WaveBuffer {
 
     @Override
     public float[] createBuffer() {
+        if (Settings.frequencyChanged) {
+            writeSinWaveBuffers();
+            Settings.frequencyChanged = false;
+        }
         int harmonicsNumber = wave.getWaveHarmonics().size();
         Queue<float[]> readyBuffers = new LinkedList<>();
         float[] buffer;
@@ -41,7 +46,8 @@ public class WaveBufferSingleThread extends WaveBuffer {
         return buf1;
     }
 
-    private void writeSinWaveBuffers(){
+    private void writeSinWaveBuffers() {
+        sinWaveBuffers.clear();
         int harmonicsNumber = wave.getWaveHarmonics().size();
         sinWaveBuffers.add((new SinWaveBuffer(wave.getMainTone(), duration)));
         for (int i = 0; i < harmonicsNumber; i++) {

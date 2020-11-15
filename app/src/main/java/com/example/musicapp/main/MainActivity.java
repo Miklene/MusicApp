@@ -58,10 +58,9 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         mainPresenter.attachRecyclerViewAdapter(adapter);
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(this);
-        TestAlgorithmOfGenerationBuffer testAlgorithmOfGenerationBuffer = new TestAlgorithmOfGenerationBuffer();
-        testAlgorithmOfGenerationBuffer.speedTestByMeMulti();
-        testAlgorithmOfGenerationBuffer.speedTestByMeSingle();
-       /* File myFile = new File(this.getExternalFilesDir(null), "wave.wav");
+        WaveBuffersSpeedTest waveBuffersSpeedTest = new WaveBuffersSpeedTest();
+        waveBuffersSpeedTest.WaveBuffersSpeedTest();
+        /* File myFile = new File(this.getExternalFilesDir(null), "wave.wav");
         if (!myFile.exists()) {
             try {
                 myFile.createNewFile();
@@ -144,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
                 MainActivity.this, v, MainActivity.this.getString(R.string.transition));
         //bundle = activityOptions.toBundle();
         Intent intent = new Intent(MainActivity.this, WaveTunerActivity.class);
-        intent.putExtra("id",  waveId);
+        intent.putExtra("id", waveId);
         startActivity(intent);//, bundle);
         overridePendingTransition(R.anim.activity_grow, R.anim.activity_hide);
     }

@@ -53,9 +53,9 @@ public class WaveTunerPresenter {
 
     public void frequencyChanged(float newFrequency){
         currentWave.setFrequency(newFrequency);
-        Settings.frequencyChanged = true;
+        //Settings.frequencyChanged = true;
         waveTunerView.drawGraph();
-        //wavePlayer.updateWaveBuffer(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
+        wavePlayer.updateWaveBuffer(WaveBufferBuilder.getWaveBuffer(currentWave, Settings.duration));
     }
 
     public void enableAmplitudeDynamic(boolean isEnable){

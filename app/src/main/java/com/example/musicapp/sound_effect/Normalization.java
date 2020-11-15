@@ -29,24 +29,4 @@ public class Normalization extends SoundEffectDecorator {
         }
         return max;
     }
-
-    /*@Override
-    public short[] createShortBuffer() {
-        short[] buffer = waveBuffer.createShortBuffer();
-        float correctionValue = findMaxAmplitude(buffer)*1.2f;
-        for (int i = 0; i < buffer.length; i++) {
-            buffer[i] = (short) (buffer[i] / correctionValue);
-        }
-        return buffer;
-    }
-
-    private short findMaxAmplitude(short[] buffer) {
-        short max;
-        max = buffer[0];
-        for (int i = 0; i < buffer.length; i++) {
-            if (max < buffer[i])
-                max = buffer[i];
-        }
-        return max;
-    }*/
 }

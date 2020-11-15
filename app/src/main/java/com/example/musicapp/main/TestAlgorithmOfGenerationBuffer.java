@@ -17,7 +17,8 @@ class WaveBuffersSpeedTest {
     private Wave[] waves = new Wave[3];
     private int[] testedDuration = {1000, 2000, 5000};
     private int[] testedHarmonicsNumber = {15, 23, 31};
-    private WaveBuffer[] wavesBuffers = new WaveBuffer[9];
+    private WaveBuffer[] wavesBuffers = new WaveBuffer[testedHarmonicsNumber.length * testedDuration.length];
+
 
     public void WaveBuffersSpeedTest() {
         speedTestSingle();
@@ -38,13 +39,14 @@ class WaveBuffersSpeedTest {
             else
                 k = 0;
             start = System.nanoTime();
-            generateWaveBufferSingleThread(i);
+            generateWaveBuffer(i);
             finish = System.nanoTime();
             singleResult = finish - start;
             result = "Single thread " + testedDuration[j] * 2 + " and " + testedHarmonicsNumber[k] +
                     ", testedDuration[duration[" + testedDuration[j] + "] " +
                     "; testedHarmonicsNumber[" + testedHarmonicsNumber[k] + "]]: " + singleResult / 1000;
             System.out.println(result);
+
         }
     }
 
@@ -59,7 +61,7 @@ class WaveBuffersSpeedTest {
             if (i % 3 != 0) k++;
             else k = 0;
             start = System.nanoTime();
-            generateWaveBufferMultiThread(i);
+            generateWaveBuffer(i);
             finish = System.nanoTime();
             multiResult = finish - start;
             result = "Multi thread " + testedDuration[j] * 2 + " and " + testedHarmonicsNumber[k] +
@@ -78,28 +80,22 @@ class WaveBuffersSpeedTest {
     private void constructWaveBufferSingleThread() {
         constructWaves();
         for (int i = 0; i < wavesBuffers.length; i++) {
-            Settings.duration = testedDuration[i%3];
-            wavesBuffers[i] = new WaveBufferSingleThread(waves[i/3], testedDuration[i%3]);
+            Settings.duration = testedDuration[i % testedDuration.length];
+            wavesBuffers[i] = new WaveBufferSingleThread(waves[i / testedHarmonicsNumber.length], testedDuration[i % testedDuration.length]);
         }
     }
 
     private void constructWaveBufferMultiThread() {
         constructWaves();
         for (int i = 0; i < wavesBuffers.length; i++) {
-            Settings.duration = testedDuration[i%3];
-            wavesBuffers[i] = new WaveBufferMultiThread(waves[i/3], testedDuration[i%3]);
+            Settings.duration = testedDuration[i % testedDuration.length];
+            wavesBuffers[i] = new WaveBufferMultiThread(waves[i / testedHarmonicsNumber.length], testedDuration[i % testedDuration.length]);
         }
     }
 
-    private void generateWaveBufferSingleThread(int j) {
+    private void generateWaveBuffer(int item) {
         for (int i = 0; i < 1000; i++) {
-            wavesBuffers[j].createBuffer();
-        }
-    }
-
-    private void generateWaveBufferMultiThread(int j) {
-        for (int i = 0; i < 1000; i++) {
-            wavesBuffers[j].createBuffer();
+            wavesBuffers[item].createBuffer();
         }
     }
 

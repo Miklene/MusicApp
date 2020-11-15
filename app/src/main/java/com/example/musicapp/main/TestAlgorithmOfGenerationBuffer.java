@@ -19,7 +19,7 @@ class WaveBuffersSpeedTest {
     private int[] testedHarmonicsNumber = {15, 23, 31};
     private WaveBuffer[] wavesBuffers = new WaveBuffer[9];
 
-    public void WaveBuffersSpeedTest() {
+    public void waveBuffersSpeedTest() {
         speedTestSingle();
         speedTestMulti();
     }
@@ -45,7 +45,7 @@ class WaveBuffersSpeedTest {
             finish = System.nanoTime();
 
             singleResult = finish - start;
-            result = "Single thread " + testedDuration[j] * 2 + " and " + testedHarmonicsNumber[k] +
+            result = "Single thread №" + i + ": " + testedDuration[j] * 2 + " and " + testedHarmonicsNumber[k] +
                     ", testedDuration[duration[" + testedDuration[j] + "] " +
                     "; testedHarmonicsNumber[" + testedHarmonicsNumber[k] + "]]: " + singleResult / 1000;
             System.out.println(result);
@@ -73,7 +73,7 @@ class WaveBuffersSpeedTest {
             finish = System.nanoTime();
 
             multiResult = finish - start;
-            result = "Multi thread " + testedDuration[j] * 2 + " and " + testedHarmonicsNumber[k] +
+            result = "Multi thread №" + i + ": " + testedDuration[j] * 2 + " and " + testedHarmonicsNumber[k] +
                     ", testedDuration[duration[" + testedDuration[j] * 2 + "] " +
                     "; testedHarmonicsNumber[" + testedHarmonicsNumber[k] + "]]: " + multiResult / 1000;
             System.out.println(result);

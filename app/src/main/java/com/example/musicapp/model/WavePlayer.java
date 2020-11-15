@@ -9,6 +9,9 @@ import com.example.musicapp.buffer.WaveBuffer;
 import com.example.musicapp.common.RecordParameters;
 import com.example.musicapp.wave.Wave;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class WavePlayer implements RecordParameters {
 
     private Thread thread;
@@ -16,6 +19,8 @@ public class WavePlayer implements RecordParameters {
     //private ComplexWaveBuffer complexWaveBuffer;
     private WaveBuffer waveBuffer;
     private static WavePlayer wavePlayer;
+    private boolean isPlayed = false;
+    private float[] buffer;
 
     private WavePlayer() {
     }
@@ -29,8 +34,9 @@ public class WavePlayer implements RecordParameters {
     public void playWave(WaveBuffer waveBuffer/*Wave wave, int duration*/) {
         if (thread != null)
             return;
-        //complexWaveBuffer = new ComplexWaveBuffer(wave,duration);
+        ExecutorService executor =  Executors.newSingleThreadExecutor();
         this.waveBuffer = waveBuffer;
+        isPlayed = true;
         play();
     }
 
@@ -45,10 +51,7 @@ public class WavePlayer implements RecordParameters {
                         audioTrack.write(buffer, 0, buffer.length, AudioTrack.WRITE_BLOCKING);
                     } else {
                         try {
-                            audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
-                                    RecordParameters.sampleRate, AudioFormat.CHANNEL_OUT_STEREO,
-                                    AudioFormat.ENCODING_PCM_FLOAT,
-                                    buffer.length, AudioTrack.MODE_STREAM);
+                            createAudioTrack();
                         } catch (IllegalArgumentException e) {
                             return;
                         }
@@ -63,6 +66,13 @@ public class WavePlayer implements RecordParameters {
             }
         });
         thread.start();
+    }
+
+    private void createAudioTrack(){
+        audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
+                RecordParameters.sampleRate, AudioFormat.CHANNEL_OUT_STEREO,
+                AudioFormat.ENCODING_PCM_FLOAT,
+                buffer.length, AudioTrack.MODE_STREAM);
     }
 
     public void updateWaveBuffer(WaveBuffer waveBuffer) {

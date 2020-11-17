@@ -36,6 +36,7 @@ class WaveBuffersSpeedTest {
             multiResult = finish - start;
             result = type + " " + testedDuration[i % testedDuration.length] * 2 + " and " +
                     testedHarmonicsNumber[i / testedDuration.length] + ", : " + multiResult / 1000;
+            speedTestMulti.append(result);
             System.out.println(result);
         }
     }

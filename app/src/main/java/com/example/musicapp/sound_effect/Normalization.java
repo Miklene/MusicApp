@@ -17,6 +17,10 @@ public class Normalization extends SoundEffectDecorator {
         for (int i = 0; i < buffer.length; i++) {
             buffer[i] = buffer[i] / correctionValue;
         }
+        if(SoundEffectsStatus.startPlayback)
+            return new StartPlayback().createBuffer(buffer);
+        if(SoundEffectsStatus.endPlayback)
+            return new EndPlayback().createBuffer(buffer);
         return buffer;
     }
 

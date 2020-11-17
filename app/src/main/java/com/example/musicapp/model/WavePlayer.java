@@ -7,6 +7,7 @@ import android.media.AudioTrack;
 import com.example.musicapp.buffer.ComplexWaveBuffer;
 import com.example.musicapp.buffer.WaveBuffer;
 import com.example.musicapp.common.RecordParameters;
+import com.example.musicapp.sound_effect.SoundEffectsStatus;
 import com.example.musicapp.wave.Wave;
 
 import java.util.concurrent.ExecutorService;
@@ -21,6 +22,7 @@ public class WavePlayer implements RecordParameters {
     private static WavePlayer wavePlayer;
     private boolean isPlayed = false;
     private float[] buffer;
+    private ExecutorService executor;
 
     private WavePlayer() {
     }
@@ -34,10 +36,12 @@ public class WavePlayer implements RecordParameters {
     public void playWave(WaveBuffer waveBuffer/*Wave wave, int duration*/) {
         if (thread != null)
             return;
-        ExecutorService executor =  Executors.newSingleThreadExecutor();
+        executor =  Executors.newSingleThreadExecutor();
         this.waveBuffer = waveBuffer;
-        isPlayed = true;
-        play();
+        Settings.isPlayed = true;
+        executor.execute(new AudioTrackPlayer(waveBuffer));
+
+        //play();
     }
 
     public void play() {
@@ -45,17 +49,16 @@ public class WavePlayer implements RecordParameters {
             public void run() {
                 float[] buffer;
                 while (!Thread.currentThread().isInterrupted()) {
-                    //buffer = complexWaveBuffer.createBufferSingleThread();
                     buffer = waveBuffer.createBuffer();
                     if (audioTrack != null) {
-                        audioTrack.write(buffer, 0, buffer.length, AudioTrack.WRITE_BLOCKING);
+                        writeAudioTrack(buffer);
                     } else {
                         try {
-                            createAudioTrack();
+                            createAudioTrack(buffer);
                         } catch (IllegalArgumentException e) {
                             return;
                         }
-                        audioTrack.write(buffer, 0, buffer.length, AudioTrack.WRITE_BLOCKING);
+                        writeAudioTrack(buffer);
                         try {
                             audioTrack.play();
                         } catch (IllegalStateException e) {
@@ -68,7 +71,11 @@ public class WavePlayer implements RecordParameters {
         thread.start();
     }
 
-    private void createAudioTrack(){
+    private void writeAudioTrack(float[] buffer){
+        audioTrack.write(buffer, 0, buffer.length, AudioTrack.WRITE_BLOCKING);
+    }
+
+    private void createAudioTrack(float[] buffer){
         audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
                 RecordParameters.sampleRate, AudioFormat.CHANNEL_OUT_STEREO,
                 AudioFormat.ENCODING_PCM_FLOAT,
@@ -81,7 +88,9 @@ public class WavePlayer implements RecordParameters {
 
     public void stopWavePlayer() {
         interrupt(thread);
-
+        Settings.isPlayed = false;
+        if(executor!=null)
+            executor.shutdown();
         if (audioTrack != null) {
             try {
                 audioTrack.pause();

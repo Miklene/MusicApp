@@ -5,8 +5,10 @@ import com.example.musicapp.buffer.WaveBufferMultiThread;
 import com.example.musicapp.buffer.WaveBufferSingleThread;
 import com.example.musicapp.common.TypeOfBuffer;
 import com.example.musicapp.sound_effect.AmplitudeDynamics;
+import com.example.musicapp.sound_effect.EndPlayback;
 import com.example.musicapp.sound_effect.Normalization;
 import com.example.musicapp.sound_effect.SoundEffectsStatus;
+import com.example.musicapp.sound_effect.StartPlayback;
 import com.example.musicapp.sound_effect.Stereo;
 import com.example.musicapp.wave.Wave;
 
@@ -25,6 +27,10 @@ public class WaveBufferBuilder {
             waveBuffer = new Normalization(waveBuffer);
         if(SoundEffectsStatus.stereo)
             waveBuffer = new Stereo(waveBuffer);
+       /* if(SoundEffectsStatus.startPlayback)
+            waveBuffer = new StartPlayback(waveBuffer);
+        if(SoundEffectsStatus.endPlayback)
+            waveBuffer = new EndPlayback(waveBuffer);*/
         return waveBuffer;
     }
 

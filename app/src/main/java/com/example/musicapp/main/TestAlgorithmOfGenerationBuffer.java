@@ -17,12 +17,12 @@ class WaveBuffersSpeedTest {
     private Wave[] waves = new Wave[3];
     private WaveBuffer[] wavesBuffers = new WaveBuffer[testedHarmonicsNumber.length * testedDuration.length];
 
-    public void WaveBuffersSpeedTest() {
+    public void waveBuffersSpeedTest() {
         speedTestSM(TypeOfBuffer.SINGLE);
         speedTestSM(TypeOfBuffer.MULTI);
     }
 
-    private void speedTestSM(TypeOfBuffer type) {
+    private StringBuilder speedTestSM(TypeOfBuffer type) {
         long start;
         long finish;
         long multiResult;
@@ -35,10 +35,10 @@ class WaveBuffersSpeedTest {
             finish = System.nanoTime();
             multiResult = finish - start;
             result = type + " " + testedDuration[i % testedDuration.length] * 2 + " and " +
-                    testedHarmonicsNumber[i / testedDuration.length] + ", : " + multiResult / 1000;
+                    testedHarmonicsNumber[i / testedDuration.length] + ", : " + multiResult / 1000 + "\n";
             speedTestMulti.append(result);
-            System.out.println(result);
         }
+        return speedTestMulti;
     }
 
     private void constructWaves() {
@@ -53,7 +53,6 @@ class WaveBuffersSpeedTest {
         for (int i = 0; i < wavesBuffers.length; i++) {
             Settings.duration = testedDuration[i % testedDuration.length];
             wavesBuffers[i] = waveBufferBuilder.getWaveBuffer(waves[i / testedDuration.length], testedDuration[i % testedDuration.length]);
-
         }
     }
 

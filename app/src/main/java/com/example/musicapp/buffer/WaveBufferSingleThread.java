@@ -1,11 +1,10 @@
 package com.example.musicapp.buffer;
 
-import com.example.musicapp.model.Settings;
+import com.example.musicapp.common.Settings;
 import com.example.musicapp.wave.Wave;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.Objects;
 import java.util.Queue;
 
 public class WaveBufferSingleThread extends WaveBuffer {

@@ -139,7 +139,7 @@
                     android:paddingTop="5dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="5dp" />
-                <com.example.musicapp.wave_tuner.CustomExpandableListView
+                <com.example.musicapp.activities.wave_tuner.CustomExpandableListView
                     android:id="@+id/expandableListViewWaveTuner"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

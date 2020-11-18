@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MainActivity">
-        <activity android:name=".main.MainActivity"
+        <activity android:name=".activities.main.MainActivity"
             android:screenOrientation="nosensor"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
@@ -20,22 +20,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".wave_dialog.WaveDialogActivity"
+        <activity android:name=".activities.wave_dialog.WaveDialogActivity"
             android:theme="@style/Theme.WaveDialogActivity"
             android:noHistory="true"
 
             android:label="@string/waveParameters">
-            <intent-filter>
-                <action android:name="android.intent.action.FRAGMENT" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".Deprecated.HarmonicDialogActivity"
-            android:theme="@android:style/Theme.Material.Dialog"
-            android:noHistory="true"
-            android:label="@string/harmonicParameters">
             <intent-filter>
                 <action android:name="android.intent.action.FRAGMENT" />
 
@@ -48,7 +37,7 @@
             android:screenOrientation="fullSensor"
             />
 
-        <activity android:name=".wave_tuner.WaveTunerActivity"
+        <activity android:name=".activities.wave_tuner.WaveTunerActivity"
             android:theme="@style/Theme.WaveTunerActivity"
             android:screenOrientation="fullSensor"
             />

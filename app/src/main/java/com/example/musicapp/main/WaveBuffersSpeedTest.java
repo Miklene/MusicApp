@@ -12,17 +12,23 @@ import com.example.musicapp.wave.WaveFactory;
 
 class WaveBuffersSpeedTest {
 
-    private int[] testedDuration = {1000, 2000, 5000};
-    private int[] testedHarmonicsNumber = {15, 23, 31};
-    private Wave[] waves = new Wave[3];
+    private final int[] testedDuration = {1000, 2000, 5000};
+    private final int[] testedHarmonicsNumber = {15, 23, 31};
+    private final Wave[] waves = new Wave[testedHarmonicsNumber.length];
     private WaveBuffer[] wavesBuffers = new WaveBuffer[testedHarmonicsNumber.length * testedDuration.length];
 
-    public void waveBuffersSpeedTest() {
-        speedTestSM(TypeOfBuffer.SINGLE);
-        speedTestSM(TypeOfBuffer.MULTI);
+    public WaveBuffersSpeedTest() {
+        constructWaves();
     }
 
-    private StringBuilder speedTestSM(TypeOfBuffer type) {
+    public String startTest() {
+        String string;
+        string = startTestSM(TypeOfBuffer.SINGLE) ;
+        string += startTestSM(TypeOfBuffer.MULTI);
+        return string;
+    }
+
+    private String startTestSM(TypeOfBuffer type) {
         long start;
         long finish;
         long multiResult;
@@ -38,7 +44,7 @@ class WaveBuffersSpeedTest {
                     testedHarmonicsNumber[i / testedDuration.length] + ", : " + multiResult / 1000 + "\n";
             speedTestMulti.append(result);
         }
-        return speedTestMulti;
+        return speedTestMulti.toString();
     }
 
     private void constructWaves() {
@@ -47,12 +53,10 @@ class WaveBuffersSpeedTest {
     }
 
     private void constructWaveBuffer(TypeOfBuffer type) {
-        constructWaves();
         Settings.currentWaveBuffer = type;
-        WaveBufferBuilder waveBufferBuilder = new WaveBufferBuilder();
         for (int i = 0; i < wavesBuffers.length; i++) {
             Settings.duration = testedDuration[i % testedDuration.length];
-            wavesBuffers[i] = waveBufferBuilder.getWaveBuffer(waves[i / testedDuration.length], testedDuration[i % testedDuration.length]);
+            wavesBuffers[i] = WaveBufferBuilder.getWaveBuffer(waves[i / testedDuration.length], testedDuration[i % testedDuration.length]);
         }
     }
 

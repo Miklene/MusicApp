@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements WaveInstanceObser
         buttonAdd = findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(this);
         WaveBuffersSpeedTest waveBuffersSpeedTest = new WaveBuffersSpeedTest();
-        waveBuffersSpeedTest.waveBuffersSpeedTest();
+        String report = waveBuffersSpeedTest.startTest();
+        System.out.println(report);
         //waveBuffersSpeedTest.;
         /* File myFile = new File(this.getExternalFilesDir(null), "wave.wav");
         if (!myFile.exists()) {

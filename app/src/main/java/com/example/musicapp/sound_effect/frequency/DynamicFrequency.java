@@ -46,15 +46,14 @@ public class DynamicFrequency extends FrequencyBehavior implements DynamicCoeffi
     }*/
     private float calculateDynamicCoefficient() {
         float coefficient;
-        if (delay-- > 0) {
+        if (delay-- > 0)
             return 0;
-        }
         if (delay == -1)
             counter = 0;
         if (counter < time)
             return 0;
         else if (counter < time + 11)
-            return (float) ((float)((counter - time) / 11d) * dynamicPercent);
+            return (float) (((counter - time) / 11d) * dynamicPercent);
         if (counter > time * 2 + 11 && counter < time * 2 + 22)
             return (float) (((time * 2 + 22 - counter) / 11d) * dynamicPercent);
         if (counter == time * 2 + 22) {

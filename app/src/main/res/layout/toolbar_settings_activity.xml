@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Toolbar    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/Theme.SettingsActivity"
+    android:id="@+id/toolbar_settings_activity"
+    android:background="@color/colorPrimary"
+    >
+
+    <ImageButton
+        android:id="@+id/toolbar_image_button_settings_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        android:background="@color/colorPrimary"
+        android:onClick="onClick"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/settings"
+        android:textSize="26dp"
+        android:textColor="@color/colorWhite"/>
+
+</Toolbar>

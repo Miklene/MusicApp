@@ -54,10 +54,14 @@
     <string name="step">Шаг</string>
     <string name="soundEffects">Звуковые эффекты</string>
     <string name="amplitudeDynamic">Динамика амплитуды</string>
+    <string name="reverberation">Реверберация</string>
     <string name="frequencyDynamic">Динамика частоты</string>
     <string name="normalization">Нормализация амплитуды</string>
     <string name="settingsAD">Настройки динамики амплитуды</string>
     <string name="settings">Настройки</string>
-
+    <string name="enterDurationTime">Введите значение</string>
+    <string name="singleSettings">Single</string>
+    <string name="multiSettings">Multi</string>
+    <string name="durationTime">Продолжительность:</string>
 
 </resources>

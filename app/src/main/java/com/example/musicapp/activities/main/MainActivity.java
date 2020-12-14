@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.main_menu_item_settings) {
-            //ПИСАТЬ ВЫЗОВ SettingsActivity ТУТ!
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
         }

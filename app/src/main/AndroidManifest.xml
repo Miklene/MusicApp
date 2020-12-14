@@ -44,6 +44,7 @@
             />
 
         <activity android:name=".activities.settings.SettingsActivity"
+            android:parentActivityName=".activities.main.MainActivity"
             android:theme="@style/Theme.WaveTunerActivity"
             android:screenOrientation="fullSensor"
             />

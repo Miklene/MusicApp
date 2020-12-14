@@ -67,17 +67,19 @@ public class SettingsActivity extends Activity implements CompoundButton.OnCheck
         durationEditText = findViewById(R.id.durationEditText);
         durationEditText.setText(String.valueOf(Settings.duration));
 
-        checkBoxAmplitudeDynamic = (CheckBox) findViewById(R.id.check_box_amplitude_dynamic);
+        checkBoxAmplitudeDynamic = findViewById(R.id.check_box_amplitude_dynamic);
         checkBoxFrequencyDynamic = findViewById(R.id.check_box_frequency_dynamic);
         checkBoxNormalization = findViewById(R.id.check_box_normalization);
-        checkBoxReverberation = (CheckBox) findViewById(R.id.check_box_reverberation);
-        checkBoxStereo = (CheckBox) findViewById(R.id.check_box_stereo);
+        checkBoxReverberation = findViewById(R.id.check_box_reverberation);
+        checkBoxStereo = findViewById(R.id.check_box_stereo);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -115,7 +117,6 @@ public class SettingsActivity extends Activity implements CompoundButton.OnCheck
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                durationEditText.getText().toString();
             }
 
             @Override
@@ -127,8 +128,6 @@ public class SettingsActivity extends Activity implements CompoundButton.OnCheck
                         Settings.duration = Integer.valueOf(s.toString());
                 } catch (Exception ex) {
                     durationEditText.setError("Cannot be empty");
-                    // Никита особых требований не предъявил
-                    // Можно оставить так, тк в дальнейшем EditText в итоговом приложении присутствовать вообще не будет
                 }
             }
         });

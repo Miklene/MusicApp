@@ -7,8 +7,7 @@
     android:background="@color/colorPrimary"
     >
 
-    <ImageButton
-        android:id="@+id/toolbar_image_button_settings_activity"
+    <ImageButton android:id="@+id/toolbar_image_button_settings_activity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_arrow_back_24"

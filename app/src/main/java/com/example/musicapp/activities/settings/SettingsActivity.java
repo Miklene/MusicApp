@@ -1,12 +1,15 @@
 package com.example.musicapp.activities.settings;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.SingleLineTransformationMethod;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +26,7 @@ import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import com.example.musicapp.R;
 import com.example.musicapp.activities.main.MainActivity;
@@ -37,6 +41,7 @@ import com.example.musicapp.sound_effect.SoundEffectsStatus;
 
 import java.security.spec.ECField;
 
+import static android.content.ContentValues.TAG;
 import static com.example.musicapp.common.TypeOfBuffer.MULTI;
 import static com.example.musicapp.common.TypeOfBuffer.SINGLE;
 
@@ -76,10 +81,7 @@ public class SettingsActivity extends Activity implements CompoundButton.OnCheck
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
+                onBackPressed();
             }
         });
 
@@ -132,7 +134,6 @@ public class SettingsActivity extends Activity implements CompoundButton.OnCheck
             }
         });
     }
-
 
     private void initRadioButton() {
         if (Settings.currentWaveBuffer.equals(single)) {
